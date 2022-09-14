@@ -1,0 +1,440 @@
+<!doctype html>
+<html lang="{{ shop.locale }}">
+  <head>{% render 'pagefly-head' %}
+    
+    {%- capture content_for_head -%}
+    <meta charset="utf-8">
+    {%- if settings.favicon != nil -%}
+    <link rel="shortcut icon" type="image/x-icon" href="{{ settings.favicon | img_url: '32x32' }}">
+    <link rel="apple-touch-icon" sizes="32x32" href="{{ settings.favicon | img_url: '32x32' }}">
+    {%- else -%}
+    <link rel="shortcut icon" type="image/x-icon" href="{{ 'favicon.png' | asset_img_url: '32x32' }}">
+    <link rel="apple-touch-icon" sizes="32x32" href="{{ 'favicon.png' | asset_img_url: '32x32' }}">
+    {%- endif -%}
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="360">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+     <!--  PRELOAD DNS -->
+    <link rel="preconnect dns-prefetch" href="https://cdn.shopify.com" crossorigin>
+    <link rel="preconnect dns-prefetch" href="//fonts.googleapis.com" crossorigin>
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="https://monorail-edge.shopifysvc.com" crossorigin>
+    <meta name="theme-color" content="{{ settings.main_color }}">
+ 	
+
+    
+
+
+	{% if customer %} 
+        {% style %} .section-16206447478948b24c  {
+        display: none;
+    {% endstyle %}
+    
+    
+    {% else %}
+    {% style %} .section-16371633987102bd56 {
+        display: none;
+    {% endstyle %}
+    {% endif %} 
+    
+    
+    {% if customer %} 
+        {% style %} .section-1595412396224 {
+        display: none;
+    {% endstyle %}
+    
+    
+    {% else %}
+    {% style %} .section-1637164301b7794f97 {
+        display: none;
+    {% endstyle %}
+    {% endif %} 
+    
+    {% if customer %}
+       {% style %} .hideprice {
+          display: block;
+      {% endstyle %}
+      {% else %}
+         {% style %} .hideprice {
+          display: none;
+      {% endstyle %}
+    {% endif %}
+    
+    {% comment %}
+ 	{% if customer %}
+        {% style %} .wsg-proxy-container {
+            display: block;
+        {% endstyle %}
+        {% else %}
+           {% style %} .wsg-proxy-container {
+            display: none;
+        {% endstyle %}
+	{% endif %} 
+    {% endcomment %}
+    
+    {% if customer %}
+    	{% style %} #recentlyView .featured_product__item-body .product-price {
+            display: inline-flex;
+        {% endstyle %}
+    {% else %}
+    	{% style %} #recentlyView .featured_product__item-body .product-price {
+            display: none;
+        {% endstyle %}
+    {% endif %} 
+    
+  
+
+    <title>{{ page_title }}{%- if current_tags -%}{% assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags }}{% endif %}{% if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}</title>
+    {%- if page_description -%}
+    <meta name="description" content="{{ page_description | escape }}{% if current_tags %} {{ 'general.meta.tagged_html' | t: tags: meta_tags | escape }}.{% endif %}{% if current_page != 1 %} {{ 'general.meta.page' | t: page_number: current_page }}.{% endif %}" />
+    {%- endif -%}
+
+    {%- render 'snippet-theme', type: 'root' -%}
+    {%- render 'theme-font' -%}
+    <link rel="preload" href="{{ 'header.min.css' | asset_url }}" as="style">
+    {%- if template == 'index' -%}<link rel="preload" href="{{ 'homepage.min.css'| asset_url }}" as="style">
+    {%- elsif template contains 'collection' or template contains 'search' -%}<link rel="preload" href="{{ 'collection.min.css' | asset_url }}" as="style">
+    {%- elsif template contains 'product' -%}<link rel="preload" href="{{ 'product.min.css' | asset_url }}" as="style">
+    {%- elsif template contains 'cart' -%}<link rel="preload" href="{{ 'cart.min.css' | asset_url }}" as="style">
+    {%- elsif template contains 'blog' or template contains 'article'   -%}<link rel="preload" href="{{ 'blog.min.css'       | asset_url }}" as="style">
+    {%- else -%}<link rel="preload" href="{{ 'pages.min.css' | asset_url }}" as="style">
+    {%- endif -%}
+
+    {% if template contains 'collection' %}
+    <link rel="canonical" href="{{ shop.url }}{{ collection.url }}" />
+    {% else %}
+    <link rel="canonical" href="{{ canonical_url }}" />
+    {% endif %}
+
+    <link href="{{ 'header.min.css' | asset_url }}" rel="stylesheet" type="text/css" media="all">
+    {%- endcapture -%}
+    {%- render 'compress', content: content_for_head -%}
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    {{ 'hulk_vd.js' | asset_url | script_tag }}
+    {%- render 'js-loader' -%}
+    {%- render 'snippet-theme', type: 'script' -%}
+    <script src="{{ 'lazysizes.min.js' | asset_url  }}" async="async"></script><script>document.addEventListener("click", x=>0)</script>
+
+    {% include 'globo.filter.script' %}{{content_for_header}}
+
+    {%- if settings.review_app == 'loox' -%}{{ shop.metafields.loox["global_html_head"] }}{%- endif -%}
+
+<!--begin-boost-pfs-filter-css-->
+  {% render 'boost-pfs-style' %}
+<!--end-boost-pfs-filter-css-->
+
+
+{% include 'arn_wl_cp_settings' %}
+{% include 'arn_wl_cp_styles' %}
+    
+    
+
+<!--   <script defer src="{{ 're-order.js' | asset_url }}"></script> -->
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+{% capture cur %}{% include "booster-currency" %}{% endcapture %}{% unless cur contains "Liquid error" %}{{ cur }}{% endunless %}
+{% if shop.metafields.arena.wl_cp_settings.general_settings.app_script == false %}
+            <script defer crossorigin="anonymous" src="{{ 'arn-wishlist-compare.js'  | asset_url }}"></script>
+          {% endif %}
+
+{% render 'hulkapps-reorder-css' %}
+    
+{% render 'wishlisthero-styles.liquid' %}{% include 'hulk_po_vd.liquid' %}
+    
+    <script src="https://productlabelsnbadges.shopyapps.com/static/shopyapps-product-labels.js"> </script>
+
+  {% if shop.metafields.arena.wl_cp_settings.value.general_settings.app_script == false %}
+            <script defer crossorigin="anonymous" src="{{ 'arn-wishlist-compare.js' | asset_url }}"></script>
+          {% endif %}  {% if template == 'cart' %}{% include "revy-bundle-script" %}{% endif %}
+<script type="text/javascript">if(typeof window.hulkappsWishlist === 'undefined') {
+        window.hulkappsWishlist = {};
+        }
+        window.hulkappsWishlist.baseURL = '/apps/advanced-wishlist/api';
+        window.hulkappsWishlist.hasAppBlockSupport = '';
+        </script>
+  {% if template contains 'account' or template contains 'order' %}
+    <script defer src="{{ 're-order.js' | asset_url }}"></script>
+  {% endif %}
+</head>
+{%- capture themeClass -%}template{{ template | split: '.' | first | camelize -}}
+{%- endcapture -%}{%- assign themeClass = themeClass | strip_newlines | split: '|' | join: ' ' -%}
+
+<body class="{{ themeClass }}" onclick tabIndex=0>
+  
+
+  
+  
+    {%- render 'fb-open-graph' -%}
+    {%- if template == 'index' -%}<link href="{{ 'homepage.min.css' | asset_url }}" rel="stylesheet" type="text/css" media="all" >
+    {%- elsif template contains 'collection' or template contains 'search' -%}<link href="{{ 'collection.min.css' | asset_url }}" rel="stylesheet" type="text/css" media="all">
+    {%- elsif template contains 'product' -%}<link href="{{ 'product.min.css' | asset_url }}" rel="stylesheet" type="text/css" media="all">
+    {%- elsif template contains 'cart' -%}<link href="{{ 'cart.min.css' | asset_url }}" rel="stylesheet" type="text/css" media="all">
+    {%- elsif template contains 'blog' or template contains 'article' -%}<link href="{{ 'blog.min.css' | asset_url }}" rel="stylesheet" type="text/css" media="all">
+    {%- else -%}<link href="{{ 'pages.min.css'| asset_url }}" rel="stylesheet" type="text/css" media="all">
+    {%- endif -%}
+
+    {%- if settings.currency_type == '2' -%}
+      {{- "/services/javascripts/currencies.js" | script_tag -}}
+      <script>Loader.require('currencyJS', 'scripts');</script>
+    {%- endif -%}
+
+    {%- if request.design_mode -%}
+        <link rel="stylesheet" href="{{ 'footer.css' | asset_url }}" as="style">
+    {%- endif -%}
+
+    {%- capture growaveSettings -%}{{- settings.wishlist_app -}}{{- settings.review_app -}}{%- endcapture -%}
+    {%- if growaveSettings contains 'growave' -%}
+        {% capture the_snippet_content %}{% render 'socialshopwave-helper' %}{% endcapture %}
+        {% unless the_snippet_content contains 'Liquid error' %}{{ the_snippet_content }}{% endunless %}
+    {%- endif -%}
+
+    {%- capture wl_cp_Include -%}
+        {%- capture content -%}{% include 'arn_icons_define' %}{%- endcapture -%}
+        {%- render 'compress', content: content -%}
+    {%- endcapture -%}{%- unless wl_cp_Include contains 'Liquid error' -%}{{ wl_cp_Include }}{%- endunless -%}
+
+    {%- if settings.enable_customCss -%}{%- section 'section-css-custom' -%}{%- else -%}{%- render 'snippet-theme', type: 'themeCSS' -%}{%- endif -%}
+
+    <div class="boxed-wrapper">
+
+        {%- capture header -%}{%- include 'header-layout' -%}{%- endcapture -%}
+        {%- assign header = header | split: '<!--split:mm-->' -%}
+
+        {{header[0]}}
+        {{header[2]}}
+
+
+        <main id="main-content" role="main">
+          
+
+            {%- if template == 'collection' -%}
+              {{ content_for_layout }}
+            {% elsif template == 'cart' %}
+              {% assign position = 'center' %}
+              {% assign font_size = '16px' %}
+              {% if customer %}
+                {{ content_for_layout }}
+              {% else %}
+                {% render 'wholesale-price-message', position: position, font_size: font_size %}
+              {% endif%}
+            {% elsif template contains 'media' %}
+              {% assign position = 'center' %}
+              {% assign font_size = '16px' %}
+              {% render 'wholesale-price-message', position: position, font_size: font_size %}
+            {%- else -%}
+              {%- include 'breadcrumb', pageLayout: settings.page_layout -%}
+              <div class="container-wrapper">{{ content_for_layout }}</div>
+            {%- endif -%}
+
+
+
+            {%- if settings.enable_iconbox -%}
+                {%- if request.design_mode -%}
+                    {%- section 'section-iconbox' -%}
+                {%- else -%}
+                    <div class="lazyqueue-wait lazyload" data-include="{{routes.root_url}}?section_id=section-iconbox"></div>
+                {%- endif -%}
+            {%- endif -%}
+        </main>
+
+        {% render 'mobile-footer' %}
+
+        <footer>
+          {%- section 'footer-widget' -%}
+          {%- section 'footer' -%}
+          {% comment %} {%- if request.design_mode -%}
+              {%- if settings.enable_footerWidget -%}
+              {%- section 'footer-widget' -%}{%- endif -%}
+              {%- section 'footer' -%}
+          {%- else -%}
+              {%- if settings.enable_footerWidget -%}
+              <div id="footerWidget" class="lazyqueue-wait lazyload" data-include="{{routes.root_url}}?section_id=footer-widget" data-lazyqueue></div>{%- endif -%}
+              <div class="lazyqueue-wait lazyload" data-include="{{routes.root_url}}?section_id=footer" data-lazyqueue></div>
+          {%- endif -%} {% endcomment %}
+      </footer>
+
+
+      </div>{%- capture content -%}{%- render 'modal' -%}{%- endcapture -%}{{header[1]}}
+
+    {%- render 'compress', content: content -%}
+
+    {%- if settings.review_app == 'loox' -%}{{ shop.metafields.loox["global_html_body"] }}{%- endif -%}
+    <script>Loader.require('tiny', 'scripts');Loader.require('arn_theme', 'scripts');
+        {%- if template == 'index'              -%}Loader.require('home', 'scripts');{%- endif -%}
+        {%- if template contains 'collection'   -%}Loader.require('collection', 'scripts');{%- endif -%}
+        {%- if template contains 'product'      -%}Loader.require('product', 'scripts');{%- endif -%}
+        {%- if template contains 'page'         -%}Loader.require('page', 'scripts');{%- endif -%}
+        {%- if template contains '404'          -%}Loader.require('page_404', 'scripts');{%- endif -%}
+        {%- if settings.show_quickview          -%}Loader.require('quickview', 'scripts');{%- endif -%}
+        {%- if template contains 'blog' or template contains 'article' -%}Loader.require('blog', 'scripts');{%- endif -%}
+        window.addEventListener('DOMContentLoaded', function(){Loader.load();})</script>
+<!--begin-boost-pfs-js-->
+  {% render 'boost-pfs' %}
+<!--end-boost-pfs-js-->
+  
+  {%- if request.page_type == 'collection' -%}
+  <style>
+    .boost-pfs-minicart-wrapper{display: none!important;}
+    .boost-pfs-body-no-scroll-mini-cart{overflow: unset!important;}
+  </style>
+  {%- endif -%}
+{% render 'spurit_sdc_theme_snippet' %}
+{% include 'globo.filter.action' %}
+	
+  
+  <script type="text/javascript"  src="https://apiv2.popupsmart.com/api/Bundle/382105" async></script>
+  
+  {% include 'btpersistcartappsfooterSnippent' %}<!--BeginCFFPersistentCartCart-->
+{% if customer %}
+<script>
+
+    window.cffCustomer = {
+        name: '{{customer.name}}',
+        email: '{{customer.email}}',
+        hasAccount: '{{customer.has_account}}',
+        id: '{{customer.id}}'
+    };
+
+
+</script>
+
+{% endif %}
+
+<script>
+    window.cffPCLiquidPlaced = true
+</script>
+
+<!--EndCFFPersistentCartCart-->{% include 'btpersistcartappsfooterSnippent' %}
+  
+  <style>
+    .discount-tag { 
+      background: #ebebeb;
+      padding: 5px 10px;
+      border-radius: 5px;
+      display: inline-block;
+      margin-right: 30px; color: #000000;
+    }
+    .discount-tag .close-ajax-tag{ 
+      position: relative;
+      width:15px;
+      height:15px;
+      display:inline-block;
+      margin-left:5px;
+      vertical-align:middle; 
+      cursor:pointer;
+    }
+    .discount-tag .close-ajax-tag:after, .discount-tag .close-ajax-tag:before{
+      content:'';
+      position:absolute;
+      top:50%;
+      left:50%;
+      transform:translate(-50%, -50%) rotate(45deg);
+      width:2px; height:10px;
+      background-color:#3d3d3d;
+    }
+    .discount-tag .close-ajax-tag:before{
+      width:10px;
+      height:2px;
+    } 
+    .hulkapps_discount_code{
+      max-width: unset !important;
+    }
+    .template-cart .hulkapps_discount_code{
+      max-width: 50% !important;
+    }
+    .discount_code_box input {
+      line-height: unset !important; 
+      width: 100% !important;
+    }
+    .hulkapps_discount_code.field {
+      padding: 10px !important; 
+    }
+    button.hulkapps_discount_ajax_button {
+      margin-top: 0 !important;
+    }
+    span.after_discount_price {
+      color: black;
+    }
+
+  </style>
+  
+  
+  {% unless template == 'cart' %}
+    <script>
+        window.hulkapps.cart = {{ cart | json }};
+        if (typeof window.hulkapps.cart.items == "object") {
+            for (var i=0; i<window.hulkapps.cart.items.length; i++) {
+                ["sku", "grams", "vendor", "url", "image", "handle", "requires_shipping", "product_type", "product_description"].map(function(a) {
+                    delete window.hulkapps.cart.items[i][a];
+                })
+            }
+        }
+        window.hulkapps.cart_collections = {};
+        {% for item in cart.items %}
+            window.hulkapps.cart_collections["{{item.variant_id}}"] = [];
+            {% for c in item.product.collections %}
+                window.hulkapps.cart_collections["{{item.variant_id}}"].push({{c.id}});
+            {% endfor %}
+        {% endfor %}
+    </script>
+    <div class="edit_popup" style="display: none;">
+      <form method="post" action="/cart/add" id="edit_cart_popup" class="edit_form" enctype="multipart/form-data">
+      </form>
+    </div>
+  {% endunless %}
+  {% render 'hulkappsWishlistPopup' %}
+  {% include 'revy-discounts-script' %}
+  
+  
+    <style>
+    .aodSaveCart , .aodViewCart  {
+      border-radius: 42px;
+    font-weight: var(--btn1-fw);
+    color: var(--btn1-cl);
+    background: var(--btn1-bg-cl);
+    border: var(--btn1-border-width) solid var(--btn1-border-cl);
+    font-family: var(--body-font-family);
+      font-size: 17px;
+     
+    width: 100%;
+    }
+    
+    .aod_btn{
+     border-radius: 42px;
+    font-weight: var(--btn1-fw);
+    color: var(--btn1-cl);
+    background: var(--btn1-bg-cl);
+    border: var(--btn1-border-width) solid var(--btn1-border-cl);
+    font-family: var(--body-font-family);
+      font-size: 17px !important;
+    }
+  </style>
+  <div style="display:none">
+     {% include "aod_save_cart" %}    
+  </div>
+  
+   <style>
+      #aod_smart_cart_saver table {
+      margin:0 auto;
+      }
+      
+      #aod_smart_cart_saver td, #aod_smart_cart_saver th{
+          padding: 5px 30px;
+      }
+      
+     .aodTotels{
+     display:none;
+     }
+  
+    </style>
+  {% section 'app-optimization' %}
+{% include 'appikon-discounts' %}{% if content_for_header contains 'bulk-discount-production.herokuapp.com' %}
+          {% render 'sbdn-now' %}
+          {% render 'sbdn-shop' %}
+          {% render 'sbdn-products' %}
+          {% render 'sbdn-badge' %}
+          {% render 'sbdn-sale-clock' %}
+          {% endif %} <input class="OrichiCustomerTags" value="{% for tag in customer.tags %}{{ tag }}|||{% endfor %}" /><input class="OrichiCustomerEmail" value="{{customer.email}}" /><script src="https://discount.orichi.info/Content/front.min.js"></script></body>
+</html>

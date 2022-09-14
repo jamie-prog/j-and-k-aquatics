@@ -1,0 +1,77 @@
+{%- capture content -%}
+<div class="container">
+  <div class="page-heading account-heading">
+    <h3 class="title">{{- 'customer.general.title' | t -}}</h3>
+    
+<div class='wsg-ws-only' style="display: none;"> <div id='wsg-spof-link' style='text-align: center; font-size: 1.4em; margin-top:30px; margin-bottom:20px;'> </div> <div id='wsg-message' style='text-align: center; margin-bottom: 20px;'>  <p id='wsg-account-message'> </p> </div> </div> <script> wsgRunProxy = true; </script>
+  </div>
+  <div class="row">
+    
+    <div class="col-lg-4 col-12">
+      <div id="customer_sidebar">
+        <div id="customer_detail" class="group">
+          <h5 class="name">{{ customer.name }}</h5>
+          <p class="email note">{{ customer.email }}</p>
+
+          {% if customer.default_address != nil %}
+            <div class="address note">
+              <p>{{ customer.default_address.address1 }}</p>
+              {% if customer.default_address.address2 != "" %}<p>{{ customer.default_address.address2 }}</p>{% endif %}
+              <p>{{ customer.default_address.city}}, {% if address.province_code %}{{customer.default_address.province_code}}, {% endif %}{{customer.default_address.country}}</p>
+              <p>{{ customer.default_address.zip}}</p>
+              <p>{{ customer.default_address.phone }}</p>
+            </div>
+          {% endif %}
+          
+          {% render 'cw-rep.liquid' %}
+
+          <div class="action-bottom">
+            <a id="view_address" href="/account/addresses" class="btn btn-1">{{- 'customer.account.view_addresses' | t -}} ({{ customer.addresses_count }})</a>
+            <a href="{{ routes.account_logout_url }}" class="btn btn-2">{{- 'customer.account.logout' | t -}}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-8 col-12">
+      <div id="customer_orders">
+        {% if customer.orders.size != 0 %}
+          <div class="page-heading orders-heading">
+            <span id="hulk-reorder-message" style="display:none">{hulk.reorder.message}</span><h3 class="title">{{- 'customer.orders.title' | t -}}</h3>
+          </div>
+
+          <div class="orders-detail">
+            <div class="orders-header">
+              <div class="order_number">{{- 'customer.orders.order' | t -}}</div>
+              
+              <div class="date" style="padding-left:45px;">{{- 'customer.orders.date' | t -}}</div>
+              <!--<div class="payment_status">{{- 'customer.orders.payment' | t -}}</div>-->
+              {% comment %}<div class="fulfillment_status">{{- 'customer.orders.fulfillment' | t -}}</div>{% endcomment %}
+              <div class="total">{{- 'customer.orders.total' | t -}}</div>
+            </div>
+            
+            <div class="orders-body">
+              {% for order in customer.orders %}
+              <div class="order-line {% cycle 'odd', 'even' %}{% if order.cancelled %} cancelled_order{% endif %}">
+                <div>{{ order.name | link_to: order.customer_url }}</div>
+                
+                <div><span class="note">{{ order.created_at | date: "%b %d, %Y" }}</span></div>
+                <!--<div><span class="status_{{ order.financial_status }}">{{ order.financial_status_label }}</span></div>-->
+                {% comment %}<div><span class="status_{{ order.fulfillment_status }}">{{ order.fulfillment_status_label }}</span></div>{% endcomment %}
+                <div><span class="total money">{%- render 'money-format', price: order.total_price -%}</span></div>
+                <div data-hulkapps-reorder>{hulk.reorder.list:{{order.id}}}</div>
+<!--                 <div><a target="_blank" href="https://shopify-order-edit.herokuapp.com/order-editor/reorder/j-and-k-aquatics.myshopify.com/{{order.id}}">Reorder</a></div> -->
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        {% else %}
+          <p>{{- 'customer.orders.none' | t -}}</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{%- endcapture -%}
+{%- render 'compress', content: content -%}
+{% render 'hulkapps-orders-json' %}

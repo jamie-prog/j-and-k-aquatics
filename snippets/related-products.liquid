@@ -1,0 +1,95 @@
+<style>
+    .related-products-wrapper{
+        margin-top: 2em; 
+    }
+    section.related-products{
+        display: grid;
+        grid-auto-flow: column;
+        grid-template-columns: auto;
+        justify-content: center;
+    }
+    .related-product{
+        border: 1px solid #f0f2f5;
+        border-left: none;
+        max-width: 249px;
+    }
+    .related-product:first-child{
+       border-left: 1px solid #f0f2f5; 
+    }
+    .featured_product__item-header{
+        text-align: center;
+    }
+</style>
+
+
+    {% assign related_products = product.metafields.related-products %}
+    
+    {% if related_products.size > 0 %}
+    <div class="container related-products-wrapper">
+    
+    <div class="section_title-wrapper">
+        <div class="section_title-inner">
+            <div class="section_title-text-1">
+                <h2>Related products</h2>
+            </div>
+        </div>
+    </div>
+    <section class="related-products">
+
+        {% for field in related_products %}
+            
+            {% assign site_url = shop.url | append: "/products/" %}
+            {% assign relate_product_handle = field | last %}
+            {% assign title = all_products[relate_product_handle].title %}
+            {% assign full_url = all_products[relate_product_handle].handle %}
+            {% assign price = all_products[relate_product_handle].price | money %}
+            {% assign image = all_products[relate_product_handle].featured_image | img_url: '400x' %}
+            {% assign vendor = all_products[relate_product_handle].vendor %}
+            {%- assign current_variant = all_products[relate_product_handle].selected_or_first_available_variant -%}
+            {%- assign current_variant_sku = current_variant.sku -%}
+        
+                            
+                <div class="featured_product__item related-product">
+                    <div class="featured-product_wrapper{{cardClass}}" data-product-card>
+                        <div class="featured-product_header">
+                            <div class="featured_product__item-header">
+                                <img src="{{ image }}" width="200px"/>
+                                <a href="{{ full_url }}" class="overlay-ui w-100 h-100"></a>
+                                <div class="featured_product__item-label label_ui-group lazyload" data-include="{{_routes}}=label"></div>
+                            </div>
+                        </div>
+
+                        <div class="featured_product__item-info">
+
+                            <div class="featured_product__item-body">
+                                <div class="featured_product__item-row">
+                                    {%- if settings.show_vendor -%}
+                                        <small class="featured_product__item-vendor">
+                                            <a href="{{ product.vendor | url_for_vendor }}">{{ vendor }}</a>
+                                        </small>
+                                    {%- endif -%}
+
+                                    <p class="featured_product__item-name">
+                                        <a href="{{ full_url }}">{{ title }}</a>
+                                    </p>
+
+                                    <p class="variant-sku">SKU: {{ current_variant_sku }}</p>
+                                    
+                                    {% if customer %}
+                                        {{ price }}
+                                    {% endif %}
+                                                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            
+
+        {% endfor %}
+        </section>
+</div>
+{% else %}
+    {% comment %}no related products{% endcomment %}
+{% endif %}

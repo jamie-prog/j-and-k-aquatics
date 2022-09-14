@@ -1,0 +1,28 @@
+{%- include 'product-layout-template' -%} 
+
+<script type="application/json" id="variant-metafields--data">
+    [
+        {% for variant in product.variants %}
+            { "id": {{variant.id}},
+              "rrpgbp": {{variant.metafields.product.RRPGBP | json}},
+              "description": {{variant.metafields.product.description | json}}
+              {%- if variant.metafields.product.customer_tiered_pricing -%}
+                ,"customer_discounts": {
+                    "level3": {{variant.metafields.product.customer_tiered_pricing["Level3"] | split: '%' | first | times: 1 }},
+                    "level5": {{variant.metafields.product.customer_tiered_pricing["Level5"] | split: '%' | first | times: 1 }},
+                    "level6": {{variant.metafields.product.customer_tiered_pricing["Level6"] | split: '%' | first | times: 1 }}
+                } 
+              {%- else-%}
+                ,"customer_discounts": {
+                    "level3": {{product.metafields.product.discountLevel3}},
+                    "level5": {{product.metafields.product.discountLevel5}},
+                    "level6": {{product.metafields.product.discountLevel6}}
+                } 
+              {%- endif -%}
+              {%- if customer -%}
+                  ,"customer_tags": {{customer.tags | json }}
+              {%- endif -%}
+            }{%- unless forloop.last -%},{%- endunless -%}
+        {% endfor %}
+    ]
+</script>

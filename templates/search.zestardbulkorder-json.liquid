@@ -1,0 +1,94 @@
+{% layout none %}
+{% capture results %}
+  {% for item in search.results %}
+    {% assign product = item %}
+
+    {% assign disc1 = 0 %}
+    {% if product.metafields.Product.discountLevel1 %}
+      {% assign disc1 = product.metafields.Product.discountLevel1 %}
+    {% else %}
+      {% assign disc3 = 0 %}
+    {% endif %} 
+    {% if product.metafields.Product.discountLevel3 %}
+      {% assign disc3 = product.metafields.Product.discountLevel3 %}
+    {% else %}
+      {% assign disc3 = 0 %}
+    {% endif %}
+
+    {% if product.metafields.Product.discountLevel5 %}
+      {% assign disc5 = product.metafields.Product.discountLevel5 %}
+    {% else %}
+      {% assign disc5 = 0 %}
+    {% endif %}
+
+    {% if product.metafields.Product.discountLevel6 %}
+      {% assign disc6 = product.metafields.Product.discountLevel6 %}
+    {% else %}
+      {% assign disc6 = 0 %}
+    {% endif %}
+
+    {% assign discount = 0 %}
+    {% assign disc = 0 %}
+
+    {% for tag in customer.tags %}	
+      {% if tag contains 'CustDiscountGroup-LEVEL1' %}
+          {% assign disc = disc1 %}
+      {% endif %}
+      {% if tag contains 'CustDiscountGroup-LEVEL3' %}
+          {% assign disc = disc3 %}
+      {% endif %}           
+      {% if tag contains 'CustDiscountGroup-LEVEL5' %}
+          {% assign disc = disc5 %}
+      {% endif %}            
+      {% if tag contains 'CustDiscountGroup-LEVEL6' %}
+        {% assign disc = disc6 %}
+      {% endif %}
+    {% endfor %}
+
+    {% for address in customer.addresses %}
+      {% assign country = address.country %}
+    {% endfor %}
+
+    {% if country == 'United Kingdom' %}
+      {% assign vat_percentage = 1.2 %}
+    {% else %}
+      {% assign vat_percentage = 1.23 %}
+    {% endif %}
+
+    {% assign disc_val = disc | plus: 0 %}
+    {% assign calc_DC = 100 | minus: disc_val %}
+    {% assign perc_DC = calc_DC | divided_by: 100 %}
+
+    {% for variant in product.variants %}
+      {% assign vat_inc_price = variant.price | times: vat_percentage %}
+      {% assign dic_price = variant.price | times: calc_DC | divided_by: 100 %}
+      {
+        "product_title"  : {{ product.title | json }},
+        "variant_title"  : {% if variant.title == "Default Title" %}{{"" | json}}{% else %}{{ variant.title | json }}{% endif %},
+        "variant_id"     : {{ variant.id | json }},
+        "sku"            : {{ variant.sku | json }},
+        "normal_price"   : {{ variant.price | json }},
+		"var_qty"		 : {{ variant.inventory_quantity | json }},
+        "price"          : {{ dic_price | json }},
+        "url"            : {{ variant.url | json }},
+        "product"        : {{ product | json }},
+		"disc_price"	 : {{ perc_DC | json }},
+        "disc_level3"	 : {{ product.metafields.Product.discountLevel3 | json }},
+        "disc_level5"	 : {{ product.metafields.Product.discountLevel5 | json }},
+        "disc_level6"	 : {{ product.metafields.Product.discountLevel6 | json }},
+
+        "thumbnail_url"  :
+          {% if variant.image and variant.image.src %}
+            {{ variant.image.src | product_img_url: "thumb" | json }}
+          {% else %}
+            {{ product.featured_image | product_img_url: "thumb" | json }}
+          {% endif %}
+      }
+      {% unless forloop.last %},{% endunless %}
+    {% endfor %}
+    {% unless forloop.last %},{% endunless %}
+  {% endfor %}
+{% endcapture %}
+{
+  "results": [{{ results }}]
+}

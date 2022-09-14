@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="19px" height="14px" viewBox="0 0 19 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Path</title>
+    <g id="Designs-V2" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Product-(with-variants)-dropdown" transform="translate(-848.000000, -457.000000)" fill="#00A351" fill-rule="nonzero">
+            <g id="Group" transform="translate(848.239267, 457.322667)">
+                <g id="check" transform="translate(0.000000, -0.000000)">
+                    <path d="M16.4700918,0 L15.6280682,0.832755956 C12.6891281,3.7786246 9.54310197,7.15370676 6.60647137,10.1317901 L2.41500708,6.68055333 L1.50822837,5.92182013 L0,7.75388323 L0.916046356,8.50334879 L5.94959347,12.6486229 L6.77308177,13.3333333 L7.54108263,12.5746001 C10.7240609,9.38481172 14.1776664,5.6487354 17.3120858,2.50750591 L18.1448418,1.6654823 L16.4700918,0 Z" id="Path"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

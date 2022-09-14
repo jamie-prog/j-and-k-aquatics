@@ -1,0 +1,921 @@
+<!-- solvercircle quick shop -->
+{% assign default_selected_collection_handle = "" %}
+{% assign default_sort_by = "title-ascending" %}
+{% assign qs_customer = shop.metafields.ScQuickShop.ScQsCustomers %}
+{% if qs_customer contains "nil" %}
+{% else %}
+	{% if qs_customer contains "true" %}
+		{% if customer == nil %}
+			{% assign qs_customer = nil %}
+		{% endif %}
+	{% else %}
+		{% if customer %}
+                    {% assign qs_customer_tags = qs_customer | split: ',' %}
+                    {% assign qs_customer = nil %}
+                    {% for tag in customer.tags %}
+                        {% for qs_tag in qs_customer_tags %}
+                            {% if qs_tag == tag %}
+                                {% assign qs_customer = "true" %}
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                 {% else %}
+                    {% assign qs_customer = false %}
+		{% endif %}
+	{% endif %}
+{% endif %}
+{% if qs_customer %}
+
+<script type="text/javascript">
+var store_money_format="{{shop.money_format}}";
+var store_default_currency="{{shop.currency}}";
+var store_sc_qo_shop_domain="{{shop.domain}}";
+var sc_qo_default_sort_by="{{default_sort_by}}";
+</script>
+
+{{ 'sc-qs-5198.css' | asset_url | stylesheet_tag }}
+<script src="/apps/quick-shop/scripts/js/main.js"></script>
+<style>
+  .sc-qs .btn-default {
+    background: -webkit-linear-gradient(top, #ffffff 0%, #e0e0e0 100%);
+    background: -o-linear-gradient(top, #ffffff 0%, #e0e0e0 100%);
+    background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#e0e0e0));
+    background: linear-gradient(to bottom, #ffffff 0%, #e0e0e0 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe0e0e0', GradientType=0);
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+    background-repeat: repeat-x;
+    border-color: #dbdbdb;
+    text-shadow: 0 1px 0 #fff;
+    border-color: #ccc;
+  }
+  .sc-qs{
+    margin:20px 0px;
+  }
+  .sc_qs_cart_amount{
+    background-color:#e0e0e0;
+    display: block;
+    font-size: 15px;
+    font-weight: bold;
+    line-height: 1.2em;
+    padding: 25px 0px;
+    position: fixed;
+    right: 10px;
+    top: auto !important;
+    bottom: 40px;
+    text-align: center;
+    width: 100px;
+    z-index: 100;
+  }
+  .sc-qs-quantity-container{
+    border: 1px solid #fff;
+    box-sizing: content-box;
+    display:inline-block;
+    height:40px;
+    width:100px;
+  }
+  .sc-qs-quantity{
+    height:100% !important; 
+    border:0px !important;
+    border-radius:0px !important;
+    cursor: text !important;
+    padding:0px !important;
+    text-align: center;
+    min-width:	40px !important; 
+    	  width:	40px !important;
+    max-width:	40px !important;
+  }
+  .sc-qs-quantity-container input{
+    margin: 0 !important;
+  }
+  .sc-qs-qty-adjust{
+    height:100% !important;
+    border:0px !important;
+    border-radius:0px !important;
+    padding:0px !important;
+    min-width:	30px !important; 
+      	width:	30px !important;
+    max-width:	30px !important;
+  }
+  .sc-shopify-qs-add-to-cart-list.sc-qs-item-adding:after{
+    content: "Adding...";
+  }
+  .sc-shopify-qs-add-to-cart-list.sc-qs-item-added:after{
+    content: "Add More...";
+  }
+  .sc-shopify-qs-add-to-cart-list:after{
+  	content: "Add to cart";
+  }
+  .sc-qs-product-table td{
+    text-align:center !important;
+  }
+  .sc_custom_pagination{
+    padding:0px;
+    margin:0px !important;
+  }
+  .sc-shopify-qs-loader{
+    width:34px;
+    margin:0px;
+  }
+  .sc-qs-collection{
+    margin-bottom: 10px !important;
+    -webkit-appearance: menulist;
+       -moz-appearance: menulist;
+    	      appearance: menulist;
+  }
+  .sc-qs-search-field{
+  	margin-bottom: 10px;
+  }
+  #sc-qs-specific-fields{
+    margin-bottom: 10px;
+  }
+  #sc_custom_pagination_footer{
+    margin-top:7px !important;
+  }
+  .sc-qs-product-table th[data-sort]:hover{
+    cursor:pointer;
+  }
+  .sc-qs-product-table th[data-sorting=down]:hover:after{
+    content: " ";
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 5px solid #000;
+    margin-top: 7px;
+    position:absolute;
+  }
+  .sc-qs-product-table th[data-sorting=up]:hover:after{
+    content: " ";
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #000;
+    margin-top: 7px;
+    position:absolute;
+  }
+  #s_shopify_qs_dvProductDetails{
+    width: 600px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    background-color: #FFF;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    outline: 0 none;
+  }
+  .res-modal-header{
+    border-bottom: 1px solid #E5E5E5;
+    padding:0px 15px;
+  }
+  .res-modal-body{
+    max-height: 300px;
+    padding:15px;
+  }
+  .res-modal-body table{
+    margin-bottom:0px !important;
+  }
+  .res-modal-footer{
+    border-top: 1px solid #E5E5E5;
+    padding:15px 15px 0px 15px;
+    text-align:end;
+  }
+  .res-modal-footer .sc-shopify-qs-close{
+    
+  }
+  .res-modal-body th,.res-modal-body td{
+    text-align:center;
+  } 
+  @media (max-width: 767px) {
+    .sc-qs-product-table th,.sc-qs-product-table td,#s_shopify_qs_dvProductDetails th,#s_shopify_qs_dvProductDetails td {
+      display:block !important;
+      width:100% !important;
+    }
+    .sc-qs-product-table th:last-child,#s_shopify_qs_dvProductDetails th:last-child{
+      padding:0px !important;
+    }
+  }
+  .sc-qs-search{
+    margin-bottom: 10px !important;
+  }
+  .sc-qs .no-padding{
+  	padding: 0px !important;
+  }
+  .sc-qs-control-panel{
+    padding:5px 0px;
+  }
+  
+  .mobile_view{
+  	display:none;
+  }
+  .sc-disabled {
+    pointer-events:none;
+    opacity:0.6;
+  }
+  .sc_custom_pagination li a {
+  	font-weight:bold;
+  }
+  .sc-shopify-qs-res-table-body  td img{
+  	width:125px;
+  }
+  @media (max-width: 767px) {
+  	.mobile_view{
+  		display:block !important;
+  	}
+    .desktop_view{
+  		display:none !important;
+  	}
+    .qs-mobile-box{
+    	width:100%;
+      	border:solid 1px #ddd;
+      	margin-bottom:10px;
+    }
+    .qs-mobile-leftbox{
+    	width:40%;
+      	display:inline-block;
+      	vertical-align:top;
+    }
+    .qs-mobile-leftbox div{
+    	padding:5px;
+    }
+    .qs-mobile-leftbox img{
+      /*height: 90px !important;
+      max-width: 105px !important;*/
+      
+      width:100% !important;
+      height: auto !important;
+    }
+    .qs-mobile-rightbox{
+    	width:58%;
+      	display:inline-block;
+      padding:5px;
+    }
+    .qs-mobile-product-name{
+    	font-size:13px;
+      	font-weight:bold;
+    }
+    .qs-mobile-product-price{
+    	font-size:12px;
+    }
+    .qs-mobile-action-box{
+    	font-size:12px;
+      	padding-top:5px;
+    }
+    .qs-mobile-action-box div{
+    	display:inline-block;
+    }
+    .qs-mobile-action-box input{
+    	width:40px;
+      	min-height:30px !important;
+      	height:30px !important;
+      	text-align:center;	
+    }
+    .qs-mobile-action-button{
+    	font-size:12px !important;
+      	padding:5px 10px !important;
+    }
+    #header .top_bar{
+		z-index: 777;
+	}
+    
+    
+  }
+  
+  .sc-qs-desktop-row{
+  	width:48%;
+    border:solid 1px #e0e0e0;
+    margin:5px;
+    display:inline-block;
+    height: 180px;
+  }
+  .sc-qs-desktop-column-left{
+  	display:inline-block;
+    padding:5px;
+    width: 25%;
+    vertical-align: top;
+    /*height: 140px !important;*/
+    
+    /*height: 125px !important;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin: 5px;*/
+  }
+  
+  .sc-qs-desktop-column-middle{
+  	display:inline-block;
+    vertical-align:top;
+    padding:5px;
+    width: 73%;
+    /*height: 140px !important;*/
+  }
+  .img-thumbnail {
+    padding: .25rem;
+    background-color: #fff;
+	border: 1px solid
+    #dee2e6;
+    border-radius: .25rem;
+    /*max-width: 100%;
+    height: auto;
+    width:125px;*/
+    
+    max-height: 125px !important;
+    max-width: 125px !important;
+	}
+  .sc-qs-product-title{
+  	vertical-align:top;
+  }
+  .sc-qs-desktop-column-right{
+  	/*display:inline-block;
+    vertical-align:top;*/
+    padding-top:20px;
+    /*width: 27%;
+    text-align:right;*/
+  }
+  .sc-qs-price{
+  	font-size:20px;
+    font-weight:bold;
+  }
+  
+  .sc-qs-quantity-container{
+  	border:1px solid #ddd !important;
+    height: 30px;
+  }
+  .sc-qs-quantity-container input{
+  	min-height:100% !important;
+    font-size: 14px;
+	font-weight: bold;
+  }
+  .sc-qs-quantity-container input:nth-child(1),
+  .sc-qs-quantity-container input:nth-child(2){
+  	border-right:solid 1px #ddd !important;
+  }
+  
+  .sc-shopify-qs-add-to-cart-list,.sc-shopify-qs-show-variant, .btn-sold-out{
+    min-height: 30px !important;
+    height: 30px !important;
+    padding-top: 4px !important;
+    padding-bottom: 4px !important;
+  }
+  
+  .qs-desktop-box{
+    	width:100%;
+      	border:solid 1px #ddd;
+      	margin-bottom:10px;
+    }
+    .qs-desktop-leftbox{
+    	width:27%;
+      	display:inline-block;
+      	vertical-align:top;
+    }
+    .qs-desktop-leftbox div{
+    	padding:5px;
+    }
+    .qs-desktop-leftbox img{
+    	
+      /*height: 125px !important;
+      max-width: 125px !important;*/
+      
+      width:100% !important;
+      height: auto !important;
+    }
+    .qs-desktop-rightbox{
+    	width:71%;
+      	display:inline-block;
+      padding: 5px;
+    }
+    .qs-desktop-product-name{
+    	font-size:13px;
+      	font-weight:bold;
+    }
+    .qs-desktop-product-price{
+    	font-size:12px;
+    }
+    .qs-desktop-action-box{
+    	font-size:12px;
+      	padding-top:5px;
+    }
+    .qs-desktop-action-box div{
+    	display:inline-block;
+    }
+    .qs-desktop-action-box input{
+    	width:45px !important;
+      	min-height:30px !important;
+      	height:30px !important;
+      	text-align:center;	
+      	border: solid 1px #ddd !important;
+    }
+    .qs-desktop-action-button{
+    	font-size:12px !important;
+      	padding:5px 10px !important;
+    }
+ 
+  .input-group-btn > #btnSearch.qs-btn-search{
+    min-height:34px !important;
+    height:34px !important;
+  }
+  
+  {% if shop.metafields.ScQuickShop.ScQsCSS  %}
+  {{ shop.metafields.ScQuickShop.ScQsCSS }}
+  {% endif %}
+</style>
+
+<script id="{% if shop.metafields.ScQuickShop.ScQsVariants == 1 %}sc-qs-tmpl-item{% endif %}" type="text/template">
+{%raw%}
+
+	<% for(index in variants){ %>
+  <tr class="sc-shopify-qs-item-row ">
+    <td ><a href="/products/<%= handle %>?variant=<%=variants[index].id%>" target="_blank"><% if(variants[index].title != "Default Title" ){  %><%= variants[index].title %><% }else{ %><%= title %><% } %></a></td>
+    <td><% if(variants[index].featured_image != null){ %><img style="display:inline;margin:0 auto;" width="50" src="<%= variants[index].featured_image %>"><% }else{ %> <img src="<%= featured_image.src %>" width="50" style="display:inline;margin:0 auto;"> <% } %></td>
+    <td>
+    <%= sc_gqorder_app_global.price_with_current_currency(variants[index].display_price) %>
+    </td>
+    <% if(variants[index].sku != ""){ %>
+    {% endraw %}
+    {% if shop.metafields.ScQuickShop.ScQsSku == 1 %}
+    {% raw %}
+    <td><%= variants[index].sku %></td>
+    {% endraw %}
+    {% endif %}
+    {% raw %}
+    <% }else{ %>
+    {% endraw %}
+    {% if shop.metafields.ScQuickShop.ScQsSku == 1 %}
+    {% raw %}
+    <td class="no-padding"></td>
+    {% endraw %}
+    {% endif %}
+    {% raw %}
+    <%} %>
+    <td><div class="sc-qs-quantity-container"><input class="btn btn-default sc-qs-qty-adjust sc-qs-minus" value="-" type="button"><input class="btn btn-default sc-qs-quantity" value="1" type="text"><input class="btn btn-default sc-qs-qty-adjust sc-qs-plus" value="+" type="button"></div></td>
+    <td>
+    <a data-varid="<%= variants[index].id %>" class="btn btn-default sc-shopify-qs-add-to-cart-list" ></a>
+  </td>
+  </tr>
+  <% } %>
+{% endraw %}
+</script>
+
+
+
+<script id="{% if shop.metafields.ScQuickShop.ScQsVariants == 0 %}sc-qs-tmpl-item-old{% endif %}" type="text/template">
+{%raw%}
+  <tr class="sc-shopify-qs-item-row ">
+    <td ><a href="/products/<%= handle %>" target="_blank"><%= title %></a></td>
+    <td ><img style="display:inline;margin:0 auto;" src="<%= featured_image.src %>"></td>
+    <td>
+    <%
+    var max_variant = __sc__.max(variants,function(variant){return variant.display_price;});
+    var min_variant = __sc__.min(variants,function(variant){return variant.display_price;});
+    if(max_variant.display_price != min_variant.display_price){
+    %>
+    From <%= sc_gqorder_app_global.price_with_current_currency(min_variant.display_price) %> to <%= sc_gqorder_app_global.price_with_current_currency(max_variant.display_price) %>
+  	<% }else{ %>
+    <%= sc_gqorder_app_global.price_with_current_currency(min_variant.display_price) %>
+    <% } %>
+    </td>
+    <% if(variants.length == 1){ %>
+    {% endraw %}
+    {% if shop.metafields.ScQuickShop.ScQsSku == 1 %}
+    {% raw %}
+    <td><%= variants[0].sku %></td>
+    {% endraw %}
+    {% endif %}
+    {% raw %}
+    	<td><% if(variants[0].available == 'true'){ %><div class="sc-qs-quantity-container"><input class="btn btn-default sc-qs-qty-adjust sc-qs-minus" value="-" type="button"><input class="btn btn-default sc-qs-quantity" value="1" type="text"><input class="btn btn-default sc-qs-qty-adjust sc-qs-plus" value="+" type="button"></div><% } %></td>
+    <% }else{ %>
+    {% endraw %}
+    {% if shop.metafields.ScQuickShop.ScQsSku == 1 %}
+    {% raw %}
+    <td class="no-padding"></td>
+    {% endraw %}
+    {% endif %}
+    {% raw %}
+    <td class="no-padding"></td>
+    <%} %>
+    <td>
+    <% if(variants.length == 1){ %>
+    	<% if(variants[0].available == 'true'){ %>
+    		<a data-varid="<%= variants[0].id %>" class="btn btn-default sc-shopify-qs-add-to-cart-list" ></a>
+    	<% }else{ %>
+        	<a disabled="disabled" class="btn btn-default btn-sold-out" >SOLD OUT</a>
+        <% } %>
+    <% }else{ %>
+    <a href="#s_shopify_qs_dvProductDetails" data-pid="<%= id %>" class="btn btn-default sc-shopify-qs-show-variant">Select Variants</a>
+    <% } %>
+  </td>
+  </tr>
+{% endraw %}
+</script>
+
+
+
+<script id="{% if shop.metafields.ScQuickShop.ScQsVariants == 0 %}sc-qs-tmpl-item{% endif %}" type="text/template">
+{%raw%}
+  
+        
+        <div class="sc-qs-desktop-row sc-shopify-qs-item-row">
+          	
+            <div class="sc-qs-desktop-column-left">
+            	<% if(featured_image.aspect_ratio!=""){ %>
+                  <% if(parseFloat(featured_image.aspect_ratio) >= 1){ %>
+                  <img class="img-thumbnail" src="<%= featured_image.src %>" style="width:100%">
+                  <% }else{ %>
+                  <img class="img-thumbnail" src="<%= featured_image.src %>" style="height:95px">
+                  <% } %>
+                <% }else{ %>
+                <img class="img-thumbnail" src="<%= featured_image.src %>" style="width:100%;max-height:125px">
+                <% } %>
+            </div>  
+            
+            <div class="sc-qs-desktop-column-middle">
+              
+              <div><a href="/products/<%= handle %>" target="_blank">
+              <% if(title.length > 60){ %>
+              <%= title.substring(0,60) %>...
+              <% } else{ %>
+              <%= title %>
+              <% } %>
+  			  </a></div>
+              
+              
+              
+              <%
+              var max_variant = __sc__.max(variants,function(variant){return variant.display_price;});
+              var min_variant = __sc__.min(variants,function(variant){return variant.display_price;});
+              if(max_variant.display_price != min_variant.display_price){
+              %>
+              <div class="sc-qs-price">From <%= sc_gqorder_app_global.price_with_current_currency(min_variant.display_price) %> to <%= sc_gqorder_app_global.price_with_current_currency(max_variant.display_price) %></div>
+              <% }else{ %>
+              <div class="sc-qs-price"><%= sc_gqorder_app_global.price_with_current_currency(min_variant.display_price) %></div>
+              <% } %>
+              
+              
+              <% if(variants.length == 1){ %>
+              {% endraw %}
+              	{% if shop.metafields.ScQuickShop.ScQsSku == 1 %}
+                {% raw %}
+                    <div><%= variants[0].sku %></div>
+                {% endraw %}
+    			{% endif %}
+            	{% raw %}
+            	
+                
+              <% } %>
+              
+              
+              
+              <div class="sc-qs-desktop-column-right">
+              <div>
+                <% if(variants.length == 1){ %>
+                    <% if(variants[0].available == 'true'){ %>
+                        <div class="sc-qs-quantity-container"><input class="btn btn-default sc-qs-qty-adjust sc-qs-minus" value="-" type="button"><input class="btn btn-default sc-qs-quantity" value="1" type="text"><input class="btn btn-default sc-qs-qty-adjust sc-qs-plus" value="+" type="button"></div>
+                        <div style="display:inline-block;"><a data-varid="<%= variants[0].id %>" class="btn btn-default sc-shopify-qs-add-to-cart-list" ></a></div>
+                    <% }else{ %>
+                        <div><a disabled="disabled" class="btn btn-default btn-sold-out" >SOLD OUT</a></div>
+                    <% } %>
+                <% }else{ %>
+                		<div style="display:inline-block;"><a href="#s_shopify_qs_dvProductDetails" data-pid="<%= id %>" class="btn btn-default sc-shopify-qs-show-variant">Select Variants</a></div>
+                <% } %>
+              </div>
+            </div>
+              
+              
+              
+            </div>
+            
+            
+          </div>
+  
+  
+  
+{% endraw %}
+</script>
+
+
+<script id="{% if shop.metafields.ScQuickShop.ScQsVariants == 0 %}sc-qs-mobile-tmpl-item{% endif %}" type="text/template">
+{%raw%}
+  
+  <div class="qs-mobile-box">
+    <div class="qs-mobile-leftbox">
+      <div><img src="<%= featured_image.src %>"></div>
+    </div>
+    <div class="qs-mobile-rightbox">
+      <div class="qs-mobile-product-name"><a href="/products/<%= handle %>" target="_blank"><%= title %></a></div>
+      
+      <%
+    	var max_variant = __sc__.max(variants,function(variant){return variant.display_price;});
+    	var min_variant = __sc__.min(variants,function(variant){return variant.display_price;});
+    	if(max_variant.display_price != min_variant.display_price){
+      %>
+      <div class="qs-mobile-product-price">From <%= sc_gqorder_app_global.price_with_current_currency(min_variant.display_price) %> to <%= sc_gqorder_app_global.price_with_current_currency(max_variant.display_price) %></div>
+      <% }else{ %>
+      <div class="qs-mobile-product-price"><%= sc_gqorder_app_global.price_with_current_currency(min_variant.display_price) %></div>
+      <% } %>
+      
+      <% if(variants.length == 1){ %>
+      	{% endraw %}
+    		{% if shop.metafields.ScQuickShop.ScQsSku == 1 %}
+    	{% raw %}
+        	<div class="qs-mobile-product-price"><%= variants[0].sku %></div>
+    	{% endraw %}
+    		{% endif %}
+            
+            {% raw %}
+            
+     <div class="qs-mobile-action-box">
+        <% if(variants[0].available == 'true'){ %>
+        	<div><input value="1" class="sc-qs-mobile-quantity" type="text"></div>
+        	<div><a href="#s_shopify_qs_dvProductDetails" data-varid="<%= variants[0].id %>" class="btn btn-default sc-shopify-qs-add-to-cart-list qs-mobile-action-button"></a></div>
+    	<% }else{ %>
+        	<div><a disabled="disabled" class="btn btn-default qs-mobile-action-button btn-sold-out">SOLD OUT</a></div>
+        <% } %>
+  	</div>
+    
+    
+    <% }else{ %>
+    {% endraw %}
+    {% if shop.metafields.ScQuickShop.ScQsSku == 1 %}
+    {% raw %}
+    
+    {% endraw %}
+    {% endif %}
+    {% raw %}
+    
+
+      <%} %>
+      
+      <% if(variants.length > 1){ %>
+    		<a href="#s_shopify_qs_dvProductDetails" data-pid="<%= id %>" class="btn btn-default sc-shopify-qs-show-variant qs-mobile-action-button">Select Variants</a>
+    	<% } %>
+      
+      
+    </div>
+  </div>
+  
+{% endraw %}
+</script>
+
+<script id="sc-qs-tmpl-popup-old" type="text/template">
+{% raw %}
+<table class="table table-bordered table-striped">
+  <thead>
+    <tr>
+    	<th><%= options.join('/') %></th>
+      	<th>Price</th>
+      	<th>Image</th>
+        {% endraw %}
+    	{% if shop.metafields.ScQuickShop.ScQsSku == 1 %}
+    	{% raw %}
+    	<th>SKU</th>
+    	{% endraw %}
+    	{% endif %}
+    	{% raw %}
+      	<th>Quantity</th>
+    	<th></th>
+  </tr>
+  </thead>
+  <tbody class="sc-shopify-qs-res-table-body">
+  	<% for( index in variants ){ var variant = variants[index]; %>
+    	<tr class="sc-shopify-qs-item-row">
+        <td><%= variant.title %></td>
+        <td><%= sc_gqorder_app_global.price_with_current_currency( variant.display_price ) %></td>
+        
+        <% if(variant.featured_image != null){ %>
+        <td><img src="<%= variant.featured_image %>" width="50"></td>
+        <% } else { %>
+        {% endraw %}
+                <td><img src="{{ 'sc-qo-no-image-5198.png' | asset_url }}" width="50"></td>
+        {% raw %}
+        <% } %>
+            
+        {% endraw %}
+    	{% if shop.metafields.ScQuickShop.ScQsSku == 1 %}
+    	{% raw %}
+    	<td><%= variant.sku %></td>
+    	{% endraw %}
+    	{% endif %}
+    	{% raw %}
+        <td><% if(variant.available == 'true'){ %><div class="sc-qs-quantity-container"><input class="btn btn-default sc-qs-qty-adjust sc-qs-minus" value="-" type="button"><input class="btn btn-default sc-qs-quantity" value="1" type="text"><input class="btn btn-default sc-qs-qty-adjust sc-qs-plus" value="+" type="button"></div><% } %></td>
+        <td><% if(variant.available == 'true'){ %><a data-varid="<%= variant.id %>" class="btn btn-default sc-shopify-qs-add-to-cart-list" ></a><% } else { %><a disabled="disabled" class="btn btn-default btn-sold-out" >SOLD OUT</a><% } %></td>
+  		</tr>
+    <% } %>
+  </tbody>
+</table>
+
+{% endraw %}
+</script>
+
+
+
+<script id="sc-qs-tmpl-popup-mobile" type="text/template">
+{% raw %}
+	
+    <div class="sc-shopify-qs-res-table-body">
+      <% for( index in variants ){ var variant = variants[index]; %>
+        <div class="qs-mobile-box">
+          <div class="qs-mobile-leftbox">
+            <% if(variant.featured_image != null){ %>
+            	<div><img src="<%= variant.featured_image %>"></div>
+            <% } else { %>
+            	 {% endraw %}
+                <div><img src="{{ 'sc-qo-no-image-5198.png' | asset_url }}"></div>
+                {% raw %}
+            <% } %>
+          </div>
+          <div class="qs-mobile-rightbox">
+            <div class="qs-mobile-product-name"><%= variant.title %></div>
+            <div class="qs-mobile-product-price"><%= sc_gqorder_app_global.price_with_current_currency( variant.display_price ) %></div>
+            {% endraw %}
+            {% if shop.metafields.ScQuickShop.ScQsSku == 1 %}
+            {% raw %}
+            <div class="qs-mobile-product-price"><%= variant.sku %></div>
+            {% endraw %}
+            {% endif %}
+            {% raw %}
+            
+            <div class="qs-mobile-action-box">
+              <% if(variant.available == 'true'){ %>
+              	<div><input class="sc-qs-mobile-quantity" value="1" type="text"></div>
+              	<div><a data-varid="<%= variant.id %>" class="btn btn-default sc-shopify-qs-add-to-cart-list qs-mobile-action-button"></a></div>
+              <% } else { %>
+              	<div><a disabled="disabled" class="btn btn-default qs-mobile-action-button btn-sold-out">SOLD OUT</a></div>
+        	  <% } %>
+            </div>
+          </div>
+        </div>
+      <% } %>
+    </div>
+
+{% endraw %}
+</script>
+
+
+
+
+<script id="sc-qs-tmpl-popup" type="text/template">
+{% raw %}
+	
+    <div class="sc-shopify-qs-res-table-body sc-shopify-qs-item-row">
+      <% for( index in variants ){ var variant = variants[index]; %>
+        <div class="qs-desktop-box">
+          <div class="qs-desktop-leftbox">
+            <% if(variant.featured_image != null){ %>
+            	<div><img src="<%= variant.featured_image %>"></div>
+            <% } else { %>
+            	 {% endraw %}
+                <div><img src="{{ 'sc-qo-no-image-5198.png' | asset_url }}"></div>
+                {% raw %}
+            <% } %>
+          </div>
+          <div class="qs-desktop-rightbox">
+            <div class="qs-desktop-product-name"><%= variant.title %></div>
+            <div class="qs-desktop-product-price"><%= sc_gqorder_app_global.price_with_current_currency( variant.display_price ) %></div>
+            {% endraw %}
+            {% if shop.metafields.ScQuickShop.ScQsSku == 1 %}
+            {% raw %}
+            <div class="qs-desktop-product-price"><%= variant.sku %></div>
+            {% endraw %}
+            {% endif %}
+            {% raw %}
+            
+            <div class="qs-desktop-action-box">
+              <% if(variant.available == 'true'){ %>
+              	<div><input class="sc-qs-desktop-quantity sc-qs-quantity" value="1" type="text"></div>
+              	<div><a data-varid="<%= variant.id %>" class="btn btn-default sc-shopify-qs-add-to-cart-list qs-desktop-action-button"></a></div>
+              <% } else { %>
+              	<div><a disabled="disabled" class="btn btn-default qs-desktop-action-button btn-sold-out">SOLD OUT</a></div>
+        	  <% } %>
+            </div>
+          </div>
+        </div>
+      <% } %>
+    </div>
+
+{% endraw %}
+</script>
+
+
+
+
+
+<input type="hidden" id="s_shopify_qs_hdnTotalProducts" value="">
+<input id="s_shopify_qs_hdnPageSize" value="5" type="hidden">
+
+<div id="sc_qs_cart_amount" class="sc_qs_cart_amount" style="">
+  <a href="/cart">
+    <div id="sc_qs_cart_price" class="sc_qs_cart_price">0 Items<br>$0.00</div>
+  </a>
+</div>
+<div class="sc-qs">
+  <div class="container-fluid">
+	<!-- start: control-panel -->
+    <div class="sc-qs-control-panel"> 
+	<div class="row">
+      {% assign qs_collections_str = shop.metafields.ScQuickShop.ScQsCollections | json %}
+      <div class="{% if qs_collections_str and qs_collections_str contains "nil" %}col-xs-12 col-sm-6 col-md-6 col-lg-6{% else %}col-xs-12 col-sm-12 col-md-12 col-lg-12{% endif %}">
+      	
+          
+          {% if qs_collections_str and qs_collections_str contains "nil" %}
+          	<select id="sc_qs_ddl_collection" class="form-control sc-qs-collection">      
+          		<option value="-1">All Collections</option>
+          	{% for collection in collections %}
+            	<option value="{{ collection.handle }}" >{{ collection.title }}</option>
+          	{% endfor %}
+           	</select>
+          {% else %}
+          {% assign qs_collections_str_len = qs_collections_str | size | minus : 8 %}
+          	{% assign qs_collections_str = qs_collections_str | slice:4, qs_collections_str_len %}
+          	{% assign qs_collections = qs_collections_str | split:'\",\"'%}
+        	<select id="sc_qs_ddl_collection" class="form-control sc-qs-collection" {% if qs_collections.size <= 1 %}style="display:none;"{% endif %}>
+              {% for qs_handle in qs_collections %}
+                  <option value="{{ collections[qs_handle].handle }}" {% if default_selected_collection_handle == collections[qs_handle].handle %}selected="selected"{% endif %}>{{ collections[qs_handle].title }}</option>
+              {% endfor %}
+            </select>
+          {% endif %}
+          
+      </div>
+      <div {% if qs_collections_str and qs_collections_str contains "nil" %}class="col-xs-12 col-sm-6 col-md-6 col-lg-6"{% else %}style="display:none;" {%endif%}>
+        <div class="input-group sc-qs-search-field">
+          <input id="qs-search" type="text" class="form-control " placeholder="Enter search terms" >
+          <div class="input-group-btn">
+            <button id="btnSearch" class="btn btn-default qs-btn-search" type="button">
+              <svg fill="#000000" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="17px" height="17px">    <path d="M 9 2 C 5.1458514 2 2 5.1458514 2 9 C 2 12.854149 5.1458514 16 9 16 C 10.747998 16 12.345009 15.348024 13.574219 14.28125 L 14 14.707031 L 14 16 L 20 22 L 22 20 L 16 14 L 14.707031 14 L 14.28125 13.574219 C 15.348024 12.345009 16 10.747998 16 9 C 16 5.1458514 12.854149 2 9 2 z M 9 4 C 11.773268 4 14 6.2267316 14 9 C 14 11.773268 11.773268 14 9 14 C 6.2267316 14 4 11.773268 4 9 C 4 6.2267316 6.2267316 4 9 4 z"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+
+    <div id="div_sc_qs_ddl_collection_sort_by" class="row " style="height:40px;">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
+          {% assign tmp_collection = collections | first %}        
+          Sort by: <select id="sc_qs_ddl_collection_sort_by">
+          {% for option in tmp_collection.sort_options %}
+            <option value="{{ option.value }}" {% if option.value == default_sort_by %}selected="selected"{% endif %}>
+              {{ option.name }}
+            </option>
+          {% endfor %}
+          </select>
+        </div>
+      </div>
+
+
+
+    <div class="row " style="height:40px;">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+      <!--<img class="sc-shopify-qs-loader" src="//wholesale-simplified.myshopify.com/apps/quick-shop/scripts/images/loading-2.gif">-->
+        <svg class="sc-shopify-qs-loader" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin: auto; background: rgba(0, 0, 0, 0) none repeat scroll 0% 0%; display: block; shape-rendering: auto;" width="78px" height="78px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+          <circle cx="50" cy="50" r="43" stroke-width="7" stroke="#a4b7c5" stroke-dasharray="67.54424205218055 67.54424205218055" fill="none" stroke-linecap="round">
+            <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1s" keyTimes="0;1" values="0 50 50;360 50 50"></animateTransform>
+          </circle>
+        </svg>
+        
+          <ul id="sc_custom_pagination" class="pagination sc_custom_pagination" >
+          </ul>   
+      </div>
+    </div>
+    </div>
+    <!-- end: control-panel -->
+    <!-- start: product table -->
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">          
+        <div class="sc-shopify-qs-res-table-body desktop_view"></div>
+        <div class="mobile_view qs-sc-mobile-view-holder"></div>
+      </div>
+    </div>
+	<!-- end: product table     -->
+    <div class="sc-qs-footer">
+    <div class="row ">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center ">
+        <ul id="sc_custom_pagination_footer" class="pagination sc_custom_pagination" >
+        </ul>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+<!-- modal -->
+<div id="s_shopify_qs_dvProductDetails" style="display: none;" class="res-modal-content">
+	<div class="sc-qs">
+		<div class="res-modal-header">
+			<button type="button" class="close sc-shopify-qs-close">&times;</button>
+          	<h4></h4>
+		</div>
+		<div class="container-fluid res-modal-body" style="overflow-y:auto;"></div>
+      	<div class="res-modal-footer">
+          <a class="btn btn-default sc-shopify-qs-close">Close</a>
+      	</div>
+      	
+	</div>
+</div>
+
+<script type="text/javascript">  
+  //function store_on_cart_update(){}
+  function store_on_cart_received(){}
+</script>
+
+<!-- else customer -->
+{% else %}
+<h1 style="text-align:center">Page not found !!!</h1>
+<!-- end customer -->
+{% endif %}

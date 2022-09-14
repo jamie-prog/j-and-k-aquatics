@@ -1,0 +1,16 @@
+{% comment %}
+{% for tag in product.tags %}	
+   	{% if tag == 'tax' %}
+
+
+			<div class="product-price notranslate{% if disableDefaultVariant %} hide{% endif %}" data-product-price>
+              {{__productPrice}}  
+              <p class="inc_vat_dsc">Inc VAT		
+					<span class="nor_vat_val" value="{{vat_percentage}}" data-discounted-price="{{vat_percentage}}">{{ vat_inc_price }}</span>
+				</p>
+  </div>
+	
+
+	{% endif %}
+{% endfor %}
+{% endcomment %}

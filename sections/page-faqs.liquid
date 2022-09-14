@@ -1,0 +1,60 @@
+<div class="container">
+  <div class="section_content-wrapper">
+    <div class="page-row">
+      <div class="row">
+        <div class="contact-heading">
+          <h1>FAQs</h1>
+          <p>{{ section.settings.subheading }}</p>
+        </div>
+      </div>
+      <div class="row faqs">
+        <div class="accordion">
+          <ul uk-accordion="collapsible: false">
+            {%- for block in section.blocks -%}
+            <li>
+             <a class="uk-accordion-title" href="javascript:void(0);">{{ block.settings.question }}</a>
+                <div class="uk-accordion-content">
+                    <p>{{ block.settings.answer }}</p>
+                </div>
+            </li>
+            {%- endfor -%}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% schema %}
+{
+   "name": "FAQs page",
+   "tag": "section",
+   "settings": [
+     {
+        "type":"textarea",
+        "id":"subheading",
+        "label":"Subheading",
+				"default": "Please get in touch using the form below."
+     }
+   ],
+	 "blocks": [
+     {
+       "type": "faq",
+       "name": "FAQs",
+       "settings": [
+         {
+           "type": "text",
+           "id": "question",
+					 "label": "Question"
+         },
+         {
+           "type": "richtext",
+           "id": "answer",
+					 "label": "Answer"
+         }
+       ]
+     }
+   ]
+}
+{% endschema %}

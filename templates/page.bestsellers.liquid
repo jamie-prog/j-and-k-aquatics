@@ -1,0 +1,16 @@
+{%- liquid
+	assign _layout = settings.page_layout
+-%}
+{%- if _layout == 'boxed' -%}<div class="container">{%- endif -%}
+{%- if customer -%}
+	<meta http-equiv="refresh" content="0; URL=https://j-and-k-aquatics.myshopify.com/collections/bestsellers">
+{%- else -%}
+	<div style="text-align: center; margin: 2em auto; font-size: {{ font_size }} ;">
+    <p>Please <a href="/account/login" style="color: #ff9923;">login</a> or <a href="https://j-and-k-aquatics.myshopify.com/pages/account-application-request-retail-only" style="color: #ff9923;">register</a> to access our Bestsellers Page</p> 
+</div>
+{%- endif -%}
+
+
+{%- if _layout == 'boxed' -%}</div>{%- endif -%}
+
+

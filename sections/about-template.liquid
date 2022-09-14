@@ -1,0 +1,50 @@
+<div class="container">
+  {%- for block in section.blocks -%}
+    <div class="about-block {% cycle 'odd', 'even' %}">
+      <div class="image" style="background-image: url( '{{ block.settings.image | img_url: 'master' }}' )"></div>
+      <div class="text">
+        <div class="inner">
+          {%- if block.settings.title != blank -%}<h3>{{ block.settings.title }}</h3>{%- endif -%}
+          <p>{{ block.settings.text }}</p>
+        </div>
+      </div>
+    </div>
+  {%- endfor -%}
+</div>
+
+
+{% schema %}
+{
+   "name": "About page",
+   "tag": "section",
+   "settings": [
+      {
+         "type": "paragraph",
+         "content": "Created by 'Page about template' section"
+      }
+    ],
+    "blocks": [
+      {
+         "type": "paragraph",
+         "name": "Block",
+         "settings": [
+           {
+              "type": "image_picker",
+              "id": "image",
+              "label": "Image"
+           },
+            {
+               "type": "text",
+               "id": "title",
+               "label": "Title"
+            },
+            {
+               "type": "richtext",
+               "id": "text",
+               "label": "Text"
+            }
+         ]
+      }
+   ]
+}
+{% endschema %}
