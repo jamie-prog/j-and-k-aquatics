@@ -106,7 +106,7 @@
           {%- if _layout == 'boxed' -%}</div>{%- endif -%}
         </div>
         {%- if customer and customer.tags contains 'CustDiscountGroup-LEVEL3' or customer.tags contains 'CustDiscountGroup-LEVEL5' or customer.tags contains 'CustDiscountGroup-LEVEL6' -%}
-          <script type="application/json" id="customer-pricing-data">
+          <script type="application/json" id="customer-pricing-data" {{collection.products.count}}>
             {%- capture pricing_data -%}
               {
                 {%- for product in collection.products -%}
@@ -166,7 +166,7 @@
                 {%- endfor -%}
               }
             {%- endcapture -%}
-            {{- pricing_data | strip_newlines | remove: ' '-}}
+            {{- pricing_data | strip_newlines | remove: ' '-}}           
           </script>
         {%- endif -%}
       {%- endpaginate -%}

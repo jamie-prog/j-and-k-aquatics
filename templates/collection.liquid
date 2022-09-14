@@ -57,13 +57,13 @@
       display: none!important;
     }
 </style>
-  {% section 'collection-order-form' %}
-  
-  <div class="order-form-submit">
-      <button class="btn btn-1 js-form-submit" type="button" data-cart-url="{{routes.cart_url}}" data-add-cart-url="{{routes.cart_add_url}}">Add selected to cart</button>
-    <div class="show-selected-item">
-      <input type="checkbox" class="js-show-selected" id="showSelected">
-      <label for="showSelected">Show item selected</label>
-    </div>
+{% section 'collection-order-form' %}
+
+<div class="order-form-submit" {{collection.products.count}}>
+    <button class="btn btn-1 js-form-submit" type="button" data-cart-url="{{routes.cart_url}}" data-add-cart-url="{{routes.cart_add_url}}">Add selected to cart</button>
+  <div class="show-selected-item">
+    <input type="checkbox" class="js-show-selected" id="showSelected">
+    <label for="showSelected">Show item selected</label>
   </div>
-  <script src="{{ 'order-form.js' | asset_url }}" defer></script>
+</div>
+<script src="{{ 'order-form.js' | asset_url }}" defer></script>

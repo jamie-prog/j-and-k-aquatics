@@ -2437,24 +2437,26 @@
                     }
                     
                     //Change customer discount notify and the values of line item property for defining customer level discounts
-                    if(matchedMetaData.customer_tags && matchedMetaData.customer_tags.includes("CustDiscountGroup-LEVEL3") || matchedMetaData.customer_tags.includes("CustDiscountGroup-LEVEL5") || matchedMetaData.customer_tags.includes("CustDiscountGroup-LEVEL6")){
-                        var matchedCustomerDiscountAmount = 0;
-                        if(matchedMetaData.customer_tags.includes("CustDiscountGroup-LEVEL3")){
-                            matchedCustomerDiscountAmount = matchedMetaData.customer_discounts.level3;
-                            discountLevel3Property.value = matchedCustomerDiscountAmount;
-                        }else if(matchedMetaData.customer_tags.includes("CustDiscountGroup-LEVEL5")){
-                            matchedCustomerDiscountAmount = matchedMetaData.customer_discounts.level5;
-                            discountLevel5Property.value = matchedCustomerDiscountAmount;
-                        }else if(matchedMetaData.customer_tags.includes("CustDiscountGroup-LEVEL6")){
-                            matchedCustomerDiscountAmount = matchedMetaData.customer_discounts.level6;
-                            discountLevel6Property.value = matchedCustomerDiscountAmount;
-                        }
-                        if(matchedCustomerDiscountAmount){
-                            if(discount_notify){
-                                discount_notify.innerHTML = `Your Discount is ${matchedCustomerDiscountAmount.toFixed(1)}%`;
-                                discount_notify.dataset["discountAmount"] = matchedCustomerDiscountAmount;
+                    if(matchedMetaData.customer_tags){
+                        if(matchedMetaData.customer_tags.includes("CustDiscountGroup-LEVEL3") || matchedMetaData.customer_tags.includes("CustDiscountGroup-LEVEL5") || matchedMetaData.customer_tags.includes("CustDiscountGroup-LEVEL6")){
+                            var matchedCustomerDiscountAmount = 0;
+                            if(matchedMetaData.customer_tags.includes("CustDiscountGroup-LEVEL3")){
+                                matchedCustomerDiscountAmount = matchedMetaData.customer_discounts.level3;
+                                discountLevel3Property.value = matchedCustomerDiscountAmount;
+                            }else if(matchedMetaData.customer_tags.includes("CustDiscountGroup-LEVEL5")){
+                                matchedCustomerDiscountAmount = matchedMetaData.customer_discounts.level5;
+                                discountLevel5Property.value = matchedCustomerDiscountAmount;
+                            }else if(matchedMetaData.customer_tags.includes("CustDiscountGroup-LEVEL6")){
+                                matchedCustomerDiscountAmount = matchedMetaData.customer_discounts.level6;
+                                discountLevel6Property.value = matchedCustomerDiscountAmount;
                             }
-                            pr_dsc_pct.value = matchedCustomerDiscountAmount;
+                            if(matchedCustomerDiscountAmount){
+                                if(discount_notify){
+                                    discount_notify.innerHTML = `Your Discount is ${matchedCustomerDiscountAmount.toFixed(1)}%`;
+                                    discount_notify.dataset["discountAmount"] = matchedCustomerDiscountAmount;
+                                }
+                                pr_dsc_pct.value = matchedCustomerDiscountAmount;
+                            }
                         }
                     }
                     //End 

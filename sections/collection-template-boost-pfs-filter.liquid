@@ -329,7 +329,7 @@
 	{%- comment -%} end-bc-recently-viewed-template {%- endcomment -%}
 </div>
 {%- if customer and customer.tags contains 'CustDiscountGroup-LEVEL3' or customer.tags contains 'CustDiscountGroup-LEVEL5' or customer.tags contains 'CustDiscountGroup-LEVEL6' -%}
-	<script type="application/json" id="customer-pricing-data">
+	<script type="application/json" id="customer-pricing-data" {{collection.title}}>
 	{%- capture pricing_data -%}
 		{
 		{%- for product in collection.products -%}

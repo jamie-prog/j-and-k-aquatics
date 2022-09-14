@@ -77,10 +77,10 @@ if(customPricingDataEl){
 	/************************** BUILD PRODUCT LIST **************************/
 	// Build Product Grid Item
 	ProductGridItem.prototype.compileTemplate = function(data) {
-
 		if (!data) data = this.data;
 		// Customize API data to get the Shopify data
 		data = prepareShopifyData(data);
+		console.log(data);
     // Get Customer Level Discount Data 
     if(CustomPricingData && CustomPricingData[data.id]){
       var customerLevelDiscount = CustomPricingData[data.id][data.variant_id];
@@ -91,7 +91,6 @@ if(customPricingDataEl){
     });
     var selectedVariant = selectedVariant[0];
     // Get Template
-		
 		var itemHtml = boostPFSTemplate.productGridItemHtml;
 		// Add Custom class
 		var soldOutClass = soldOut ? boostPFSTemplate.soldOutClass : '';
@@ -163,7 +162,7 @@ if(customPricingDataEl){
 		itemHtml = itemHtml.replace(/{{itemTitle}}/g, data.title);
 		itemHtml = itemHtml.replace(/{{itemHandle}}/g, data.handle);
 		itemHtml = itemHtml.replace(/{{itemVendorLabel}}/g, data.vendor);
-		itemHtml = itemHtml.replace(/{{itemUrl}}/g, Utils.buildProductItemUrl(data));
+		itemHtml = itemHtml.replace(/{{itemUrl}}/g, Utils.buildProductItemUrlWithVariant(data));
 		return itemHtml;
 	};
 	// Build Product List Item
@@ -219,7 +218,7 @@ if(customPricingDataEl){
 		// Add main attribute
 		itemHtml = itemHtml.replace(/{{itemTitle}}/g, data.title);
 		itemHtml = itemHtml.replace(/{{itemVendorLabel}}/g, data.vendor);
-		itemHtml = itemHtml.replace(/{{itemUrl}}/g, Utils.buildProductItemUrl(data));
+		itemHtml = itemHtml.replace(/{{itemUrl}}/g, Utils.buildProductItemUrlWithVariant(data));
 		itemHtml = itemHtml.replace(/{{itemId}}/g, data.id);
 
 		return itemHtml;
@@ -344,10 +343,10 @@ if(customPricingDataEl){
 			html = '<p class="boost-pfs-filter-product-item-price">';
       if (customerLevelDiscountAmount > 0) {
         let customerLevelPricing = selectedVariant.price - selectedVariant.price * customerLevelDiscountAmount / 100;
-        html +=  '<span class="boost-pfs-filter-product-item-regular-price">' + Utils.formatMoney(customerLevelPricing) + '</span>'; 
+        html +=  '<span class="boost-pfs-filter-product-item-regular-price" discounted__price>' + Utils.formatMoney(customerLevelPricing) + '</span>'; 
         // html += `<span class="discount-notify" style="display: block;">Your Discount is ${customerLevelDiscountAmount}%</span>`;
       } else {
-        html += '<span class="boost-pfs-filter-product-item-regular-price">' + Utils.formatMoney(selectedVariant.price) + '</span>';
+        html += '<span class="boost-pfs-filter-product-item-regular-price" regular__price>' + Utils.formatMoney(selectedVariant.price) + '</span>';
       }
 
       // old code
@@ -1064,25 +1063,27 @@ if(customPricingDataEl){
 			}
 
 			//Change customer discount notify and the values of line item property for defining customer level discounts
-			if(matchedMetaData.customer_tags && matchedMetaData.customer_tags.includes("CustDiscountGroup-LEVEL3") || matchedMetaData.customer_tags.includes("CustDiscountGroup-LEVEL5") || matchedMetaData.customer_tags.includes("CustDiscountGroup-LEVEL6")){
-				var matchedCustomerDiscountAmount = 0;
-				if(matchedMetaData.customer_tags.includes("CustDiscountGroup-LEVEL3")){
-					matchedCustomerDiscountAmount = matchedMetaData.customer_discounts.level3;
-					document.querySelector("input[name='properties[__product-discount3]']").value = matchedCustomerDiscountAmount;
-				}else if(matchedMetaData.customer_tags.includes("CustDiscountGroup-LEVEL5")){
-					matchedCustomerDiscountAmount = matchedMetaData.customer_discounts.level5;
-					document.querySelector("input[name='properties[__product-discount5]']").value = matchedCustomerDiscountAmount;
-				}else if(matchedMetaData.customer_tags.includes("CustDiscountGroup-LEVEL6")){
-					matchedCustomerDiscountAmount = matchedMetaData.customer_discounts.level6;
-					document.querySelector("input[name='properties[__product-discount5]']").value = matchedCustomerDiscountAmount;
-				}
-				let discount_notify = document.querySelector(".discount-notify");
-				if(matchedCustomerDiscountAmount){
-					if(discount_notify){
-						discount_notify.innerHTML = `Your Discount is ${matchedCustomerDiscountAmount.toFixed(1)}%`;
-						discount_notify.dataset["discountAmount"] = matchedCustomerDiscountAmount;
+			if(matchedMetaData.customer_tags){
+				if(matchedMetaData.customer_tags.includes("CustDiscountGroup-LEVEL3") || matchedMetaData.customer_tags.includes("CustDiscountGroup-LEVEL5") || matchedMetaData.customer_tags.includes("CustDiscountGroup-LEVEL6")){
+					var matchedCustomerDiscountAmount = 0;
+					if(matchedMetaData.customer_tags.includes("CustDiscountGroup-LEVEL3")){
+						matchedCustomerDiscountAmount = matchedMetaData.customer_discounts.level3;
+						document.querySelector("input[name='properties[__product-discount3]']").value = matchedCustomerDiscountAmount;
+					}else if(matchedMetaData.customer_tags.includes("CustDiscountGroup-LEVEL5")){
+						matchedCustomerDiscountAmount = matchedMetaData.customer_discounts.level5;
+						document.querySelector("input[name='properties[__product-discount5]']").value = matchedCustomerDiscountAmount;
+					}else if(matchedMetaData.customer_tags.includes("CustDiscountGroup-LEVEL6")){
+						matchedCustomerDiscountAmount = matchedMetaData.customer_discounts.level6;
+						document.querySelector("input[name='properties[__product-discount5]']").value = matchedCustomerDiscountAmount;
 					}
-					document.querySelector(".pr_dsc_pct").value = matchedCustomerDiscountAmount;
+					let discount_notify = document.querySelector(".discount-notify");
+					if(matchedCustomerDiscountAmount){
+						if(discount_notify){
+							discount_notify.innerHTML = `Your Discount is ${matchedCustomerDiscountAmount.toFixed(1)}%`;
+							discount_notify.dataset["discountAmount"] = matchedCustomerDiscountAmount;
+						}
+						document.querySelector(".pr_dsc_pct").value = matchedCustomerDiscountAmount;
+					}
 				}
 			}
 			//End 

@@ -77,9 +77,15 @@
           </div>
         </td>
         <td class="sku note">{{ line_item.sku }}</td>
+        {%- comment -%}
         <td class="price">{%- render 'money-format', price: line_item.price -%}</td>
+        {%- endcomment -%}
+        <td class="price">{%- render 'money-format', price: line_item.final_price -%}</td>
         <td class="quantity cente">{{ line_item.quantity }}</td>
+        {%- comment -%}
         <td class="total">{%- assign lqp = line_item.quantity | times: line_item.price -%}{%- render 'money-format', price: lqp -%}</td>
+        {%- endcomment -%}
+        <td class="total">{%- render 'money-format', price: line_item.final_link_price-%}</td>
       </tr>
       {% endfor %}
     </tbody>

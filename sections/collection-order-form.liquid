@@ -215,7 +215,7 @@
     <div class="boost-pfs-container-default">
       <div class="boost-pfs-filter-wrapper">
         <div class="boost-pfs-filter-tree boost-pfs-filter-tree-v" data-is-mobile></div>
-        <div d1 class="boost-pfs-filter-products {% if section.settings.show_product_label_image %}boost-pfs-filter-product-item-label-use-img{% endif %} boost-pfs-filter-product-item-label-type-{{ section.settings.product_label_type }} {% if section.settings.product_label_has_border_radius %} boost-pfs-filter-product-item-label-has-border{% endif %} boost-pfs-filter-product-item-show-details-{{ section.settings.show_details_when_hovering }} boost-pfs-filter-product-item-layout-{{ section.settings.product_item_layout }} boost-pfs-filter-product-item-label-{{ section.settings.product_item_label_position }} boost-pfs-filter-product-item-{{ section.settings.swatch_color_display_type }} boost-pfs-filter-swatch-shape-{{ section.settings.swatches_color_shape}} boost-pfs-filter-product-item-text-alignment-{{ section.settings.text_alignment}}" data-bc-sort="{{ collection.default_sort_by }}">
+        <div d1 lalala class="boost-pfs-filter-products {% if section.settings.show_product_label_image %}boost-pfs-filter-product-item-label-use-img{% endif %} boost-pfs-filter-product-item-label-type-{{ section.settings.product_label_type }} {% if section.settings.product_label_has_border_radius %} boost-pfs-filter-product-item-label-has-border{% endif %} boost-pfs-filter-product-item-show-details-{{ section.settings.show_details_when_hovering }} boost-pfs-filter-product-item-layout-{{ section.settings.product_item_layout }} boost-pfs-filter-product-item-label-{{ section.settings.product_item_label_position }} boost-pfs-filter-product-item-{{ section.settings.swatch_color_display_type }} boost-pfs-filter-swatch-shape-{{ section.settings.swatches_color_shape}} boost-pfs-filter-product-item-text-alignment-{{ section.settings.text_alignment}}" data-bc-sort="{{ collection.default_sort_by }}">
           {%- for product in collection.products -%}
             {%- for variant in product.variants -%}
               
@@ -275,7 +275,7 @@
         {% endif %}
       </div>
       <div class="boost-pfs-filter-right-col">
-        <div d2 class="boost-pfs-filter-products {% if section.settings.show_product_label_image %}boost-pfs-filter-product-item-label-use-img{% endif %} boost-pfs-filter-product-item-label-type-{{ section.settings.product_label_type }} {% if section.settings.product_label_has_border_radius %} boost-pfs-filter-product-item-label-has-border{% endif %} boost-pfs-filter-product-item-show-details-{{ section.settings.show_details_when_hovering }} boost-pfs-filter-product-item-layout-{{ section.settings.product_item_layout }} boost-pfs-filter-product-item-label-{{ section.settings.product_item_label_position }} boost-pfs-filter-product-item-{{ section.settings.swatch_color_display_type }} boost-pfs-filter-swatch-shape-{{ section.settings.swatches_color_shape}} boost-pfs-filter-product-item-text-alignment-{{ section.settings.text_alignment}}" data-bc-sort="{{ collection.default_sort_by }}">
+        <div d2 class="boost-pfs-filter-products {% if section.settings.show_product_label_image %}boost-pfs-filter-product-item-label-use-img{% endif %} boost-pfs-filter-product-item-label-type-{{ section.settings.product_label_type }} {% if section.settings.product_label_has_border_radius %} boost-pfs-filter-product-item-label-has-border{% endif %} boost-pfs-filter-product-item-show-details-{{ section.settings.show_details_when_hovering }} boost-pfs-filter-product-item-layout-{{ section.settings.product_item_layout }} boost-pfs-filter-product-item-label-{{ section.settings.product_item_label_position }} boost-pfs-filter-product-item-{{ section.settings.swatch_color_display_type }} boost-pfs-filter-swatch-shape-{{ section.settings.swatches_color_shape}} boost-pfs-filter-product-item-text-alignment-{{ section.settings.text_alignment}}" data-bc-sort="{{ collection.default_sort_by }}" data-collection-data="{{collection.products | json}}">
           {%- for product in collection.products -%}
             {%- for variant in product.variants -%}
               
@@ -337,7 +337,7 @@
 	{%- comment -%} end-bc-recently-viewed-template {%- endcomment -%}
 </div>
 {%- if customer and customer.tags contains 'CustDiscountGroup-LEVEL3' or customer.tags contains 'CustDiscountGroup-LEVEL5' or customer.tags contains 'CustDiscountGroup-LEVEL6' -%}
-<script type="application/json" id="customer-pricing-data">
+<script type="application/json" id="customer-pricing-data" {{collection.id}}>
   {%- capture pricing_data -%}
     {
       {%- for product in collection.products -%}
