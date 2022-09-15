@@ -84,7 +84,6 @@ if(customPricingDataEl){
 		// Get Customer Level Discount Data 
         if(CustomPricingData && CustomPricingData[data.id]){
           var customerLevelDiscount = CustomPricingData[data.id][data.variant_id];
-          console.log(customerLevelDiscount);
         }
         // Get Selected Variant 
         var selectedVariant = data.variants.filter((variant) =>{
@@ -1016,7 +1015,6 @@ function buildStock(data, selectedVariant) {
   
     BoostOTP.QuickView.prototype.onChangeVariant = function() {
 		var selectedVariant = this._getSelectedVariant();
-      	
       	if($(".boost-pfs-quickview-price-wrapper").find(".discount-notify").length > 0){
 				var discountAmount = parseInt($(".boost-pfs-quickview-price-wrapper").find(".discount-notify").attr("data-discount-amount"));
 				var newDiscountedPrice = (selectedVariant.price - (selectedVariant.price * discountAmount / 100)).toFixed(2);
