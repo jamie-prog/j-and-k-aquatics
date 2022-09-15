@@ -1,0 +1,53 @@
+<div class="mobile-footer">
+  <div class="wrapper">
+    <ul uk-accordion="collapsible: true">
+       
+      <li>
+        <a class="uk-accordion-title" href="javascript:void(0);">Account</a>
+        <div class="uk-accordion-content">
+          <ul>
+            {% for link in linklists.account.links %}
+            <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+            {%- endfor -%}
+          </ul>
+        </div>
+      </li> 
+      
+      <li>
+        <a class="uk-accordion-title" href="javascript:void(0);">Contact</a>
+        <div class="uk-accordion-content">
+          <ul>
+            <li><a href="/pages/contact">Click here to contact us</a></li>
+            <!-- <li><a href="mailto:sales@jnk-aquatics.co.uk">sales@jnk-aquatics.co.uk</a></li>
+            <li><a href="tel:01278 664488">01278 664488</a> </li> -->
+          </ul>
+        </div>
+      </li>
+
+    
+      <li>
+        <a class="uk-accordion-title" href="javascript:void(0);">Store</a>
+        <div class="uk-accordion-content">
+          <ul>
+            {% for link in linklists.store.links %}
+            <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+            {%- endfor -%}
+          </ul>
+        </div>
+      </li>
+      <li>
+        <a class="uk-accordion-title" href="javascript:void(0);">Information</a>
+        <div class="uk-accordion-content">
+          <ul>
+            {% for link in linklists.information.links %}
+            <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+            {%- endfor -%}
+          </ul>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+
+{{ 'uikit.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'uikit.min.js' | asset_url }}" async></script>

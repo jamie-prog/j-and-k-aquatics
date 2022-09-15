@@ -1,0 +1,176 @@
+{%- liquid
+assign sectionType = 'contact-page'
+assign _layout = settings.page_layout
+assign heading = section.settings.heading
+assign subheading = section.settings.subheading
+assign text_1 = section.settings.text_1
+assign text_2 = section.settings.text_2
+assign btn_url = section.settings.btn_url | default: 'javascript:void(0);'
+assign btn_label = section.settings.btn_label
+assign btn_style = section.settings.btn_style
+assign form_title = section.settings.form_title
+assign enable_map = section.settings.enable_map
+
+assign _insta_app_embed = section.settings.insta_app_embed
+assign _items_resp = section.settings.items_resp | default: '5,3,2' | replace: ',', ';' | replace: ';', ', 1fr;' | append: ', 1fr'
+assign _enable_slider = true-%}
+
+{%- capture section_class -%}
+{{- -}}section-{{- section.id -}}
+{{- -}}|layout-{{- _layout -}}
+{%- endcapture -%}{%- assign section_class = section_class | strip | split: '|' | join: ' ' -%}
+{%- assign sectionID = '.section-' | append: section.id -%}
+
+{%- capture contactForm -%}
+<div class="contact-form">
+  <div class="contact-form-title">
+  </div>
+  {%- render 'subscribe-form', enablePlaceholder: true -%}
+</div>
+{%- endcapture -%}
+
+{%- capture content -%}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+
+<div class="{{section_class}}" data-section-type="{{sectionType}}" data-section-id="{{section.id}}">
+  <div class="container">
+    <div class="section_content-wrapper">
+      <div class="page-row">
+        <div class="row">
+          <div class="contact-heading">
+            <h1>Contact Us</h1>
+            <p>{{subheading}}</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12 col-12">
+            {% comment %}{{contactForm}} {% endcomment %}
+            {% render 'hubspot-contact-form' %}
+          </div>
+        </div>
+        
+        <div class="contact-icons">
+          <div class="col">
+            <img src="{{ 'phone-us.svg' | asset_url }}" alt="Phone us">
+            <h4>Phone us</h4>
+            <p> <a href= "tel: +44 1278 664488">+44 1278 664488</a></p>
+          </div>
+          <div class="col">
+            <img src="{{ 'sales-rep.svg' | asset_url }}" alt="Sales rep">
+            <h4>Sales Reps</h4>
+            <p><a href="/pages/sales-reps">Find your Sales Rep</a></p>
+          </div>
+          <div class="col">
+            <img src="{{ 'email-us.svg' | asset_url }}" alt="Email us">
+            <h4>Email us</h4>
+            <p><a href="mailto:{{ section.settings.email }}">{{ section.settings.email }}</a></p>
+          </div>
+       
+        <img width="100%" height="auto" src="https://cdn.shopify.com/s/files/1/0561/2408/0189/files/MicrosoftTeams-image_25.png?v=1646663595" width="2204" height="1606" alt=""/>
+        
+        
+<br><br>
+<br><br>
+        
+        
+         
+          
+          
+          
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+</div>
+
+{%- capture sectionCss -%}
+{{- section_css -}}
+{%- endcapture -%}
+{%- assign sectionCss = sectionCss | strip_newlines -%}
+{%- unless sectionCss == blank -%}{% style %}{{sectionCss}}{% endstyle %}{%- endunless -%}
+{%- endcapture -%}
+{%- render 'compress', content: content -%}
+{% schema %}
+{
+"name": "Contact page",
+"tag": "section",
+"settings": [
+{
+"type":"textarea",
+"id":"subheading",
+"label":"Subheading",
+"default": "Please get in touch using the form below."
+},
+{
+"type":"header",
+"content":"Form settings"
+},
+{
+"type":"header",
+"content":"Map settings"
+},
+{
+"type":"checkbox",
+"id":"enable_map",
+"label":"Enable Map",
+"default": true
+},
+{
+"type":"richtext",
+"id":"map_info_store",
+"label":"Store information"
+},
+{
+"type":"header",
+"content":"Contact settings"
+},
+{
+"type":"text",
+"id":"phone",
+"label":"Phone number",
+"default": "01278 664488"
+},
+{
+"type":"text",
+"id":"email",
+"label":"Email address",
+"default": "sales@jnk-aquatics.co.uk"
+},
+{
+"type":"text",
+"id":"fax",
+"label":"Fax number",
+"default": "01278 664488"
+}
+],
+"blocks": [
+{
+"type": "faq",
+"name": "FAQs",
+"settings": [
+{
+"type": "text",
+"id": "question",
+"label": "Question"
+},
+{
+"type": "textarea",
+"id": "answer",
+"label": "Answer"
+}
+]
+}
+]
+}
+{% endschema %}
+
+{{ 'uikit.css' | asset_url | stylesheet_tag }}
+{% comment %} {{ 'uikit.min.js' | asset_url | script_tag }} {% endcomment %}
+
+<script src="{{ 'uikit.min.js' | asset_url }}" async></script>

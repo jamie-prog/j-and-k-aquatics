@@ -1,0 +1,3 @@
+{% assign vat = price | times: 0.23 %} 
+{% assign vatprice = price | plus:vat %}
+<p style="font-size:9px">Inc VAT = {{vatprice | money }} </p>

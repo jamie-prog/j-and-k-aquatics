@@ -1,0 +1,59 @@
+<style>
+  .boost-pfs-filter-product-item-show-details-true .boost-pfs-filter-product-item .boost-pfs-filter-product-bottom{
+  	position: static;
+    opacity: 1;
+    visibility: visible;
+  }
+  quantity-input{
+    display: flex;
+    justify-content: center;
+    grid-gap: 10px;
+  }
+  .quantity__input{
+    max-width: 95px;
+    text-align: center;
+  }
+  quantity-input button{
+    padding: 0 0px;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  .order-form-submit{
+    position: fixed;
+    width: fit-content;
+    bottom: 10%;
+    left: 50%;
+    z-index: 999;
+    transform: translateX(-50%);
+    background: #ffffff;
+    padding: 10px 20px;
+    border-radius: 25px;
+    box-shadow: 0px 12px 15px -5px rgb(0 0 0 / 64%);
+    -webkit-box-shadow: 0px 12px 15px -5px rgb(0 0 0 / 64%);
+    -moz-box-shadow: 0px 12px 15px -5px rgba(0,0,0,0.64);
+  }
+  .show-selected-item{  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    grid-gap: 10px;
+    margin-top: 10px;
+  }  
+  .show-selected-item > *{
+    margin: 0;
+    height: auto;
+    cursor: pointer;
+  }
+  
+  .show-selected .boost-pfs-filter-product-item:not(.is-selected){display: none!important;}
+</style>
+{% section 'collection-order-form' %}
+
+<div class="order-form-submit">
+	<button class="btn btn-1 js-form-submit" type="button" data-cart-url="{{routes.cart_url}}" data-add-cart-url="{{routes.cart_add_url}}">Add selected to cart</button>
+  <div class="show-selected-item">
+    <input type="checkbox" class="js-show-selected" id="showSelected">
+    <label for="showSelected">Show item selected</label>
+  </div>
+</div>
+<script src="{{ 'order-form.js' | asset_url }}" defer></script>

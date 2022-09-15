@@ -1,0 +1,95 @@
+{% assign current_variant = product.selected_or_first_available_variant %}
+{% assign disc1 = 0 %}
+
+{% if product.metafields.Product.discountLevel3 %}
+	{% assign disc3 = product.metafields.Product.discountLevel3 %}
+{% else %}
+	{% assign disc3 = 0 %}
+{% endif %}
+
+{% if product.metafields.Product.discountLevel5 %}
+	{% assign disc5 = product.metafields.Product.discountLevel5 %}
+{% else %}
+	{% assign disc5 = 0 %}
+{% endif %}
+
+{% if product.metafields.Product.discountLevel6 %}
+	{% assign disc6 = product.metafields.Product.discountLevel6 %}
+{% else %}
+	{% assign disc6 = 0 %}
+{% endif %}
+
+{% assign discount = 0 %}
+{% assign price = current_variant.price %}
+{% assign disc = 0 %}
+
+{% for tag in customer.tags %}	
+   	{% if tag contains 'CustDiscountGroup-LEVEL1' %}
+    	{% assign disc = disc1 %}
+	{% endif %}
+	{% if tag contains 'CustDiscountGroup-LEVEL3' %}
+    	{% assign disc = disc3 %}
+	{% endif %}           
+   	{% if tag contains 'CustDiscountGroup-LEVEL5' %}
+    	{% assign disc = disc5 %}
+	{% endif %}            
+    {% if tag contains 'CustDiscountGroup-LEVEL6' %}
+		{% assign disc = disc6 %}
+	{% endif %}
+{% endfor %}
+
+{% for address in customer.addresses %}
+	{% assign country = address.country %}
+{% endfor %}
+
+{% if country == 'United Kingdom' %}
+	{% assign vat_percentage = 1.2 %}
+{% else %}
+	{% assign vat_percentage = 1.2 %}
+{% endif %}
+
+{% assign vat_inc_price = price | times: vat_percentage %}
+
+{% assign disc_val = disc | plus: 0 %}
+{% assign calc_DC = 100 | minus: disc_val %}
+{% assign perc_DC = calc_DC | divided_by: 100 %}
+
+
+
+
+
+
+
+{%- assign finalnew_total_cart =  vat_inc_price | times: calc_DC | divided_by: 100 | money -%}
+
+{% if disc_val > 9 %}
+	{% assign inc_disc_price = '0.' | append: disc | times: price  %}
+{% else %}
+	{% assign inc_disc_price = '0.0' | append: disc | times: price  %}
+{% endif %}
+
+<span class="discount-notify" data-discount-amount = "{{disc}}">Your Discount is {{ disc }}% </span>
+<br>
+
+<span style="font-weight:bold; font-size:18px " class="total_disc_price">Your Price:  
+	<span class="dsc_final_price" value="{{disc}}" data-discounted-price="{{disc}}">{{ price | times: calc_DC | divided_by: 100 | money }}</span>
+
+    {% for tag in product.tags %}	
+   		{% if tag == 'tax' %}  
+  		<span class="inc_vat_dsc">Inc VAT		
+		<span class="inc_vat_dsc_val" value="{{disc}}" data-discounted-price="{{disc}}">{{ finalnew_total_cart }}</span>
+	</span>
+           {% endif %}
+      {% endfor %}   
+  
+  
+	<input type="hidden" id="pr_dsc_pct-{{product.id}}" class="pr_dsc_pct" value="{{disc}}">
+	<input type="hidden" id="pr_dsc_vat-{{product.id}}" class="pr_dsc_vat" value="{{vat_percentage}}">
+ </span>
+<br>
+<br>
+
+{% assign current_variant.price = finalnew_total_cart %}
+
+
+

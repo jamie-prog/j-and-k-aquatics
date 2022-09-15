@@ -1,0 +1,7 @@
+{%- layout none -%}
+
+
+{%- assign content = content | split: '[||]' -%}
+
+{%- capture compress -%}{{ content[1] }}{%- endcapture -%}
+{%- render 'compress', content: compress -%}

@@ -1,0 +1,529 @@
+<!-- DO NOT CHANGE -->
+<!-- css style start -->
+<style>
+  .bulk_order_container {
+    padding-left:20px;
+    padding-right:20px;
+  }
+  .bulk_order_section {
+    padding:40px 0;
+    width:80%;
+    margin:auto;
+  }
+  .bulk_heading {
+      font-size: 1.733em;
+      margin-bottom: 30px;
+      color: #29245f;
+      font-weight: 700;
+      text-align: left;
+      text-transform: none;
+  }
+  .bulk_row{
+    font-size: 16px;
+    background: #169B62;
+    margin: 0;
+    margin-bottom: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 19px
+  }
+  .heading_row{
+    font-size: 16px;
+    color: #fff;
+    font-weight: 700;
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-right: 2px solid #fff;
+    border-radius: 28px;
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+  #add_product_label {
+    cursor:pointer;
+  }
+  .remove-section svg{
+    color:red;
+    width:30px;
+    height:30px;
+    cursor:pointer;
+  }
+  .ztpl-row-wrapper {
+    display:flex;
+    align-items:center;
+  }
+  .search_label{
+    width: 40%;
+  }
+  .heading_row.search_label {
+    width: 39%;
+  }
+  .heading_row.child_label.qty,.heading_row.child_label.cost {
+    width: 19%;
+  }
+  .child_label{
+    width: 20%;
+  }
+  .remove-section {
+    text-align:center;
+    width: 6%;
+  }
+  .search_label input{
+    width:100%;
+  }
+  .three_inputs input{
+    margin:0 20px;
+    width:90%;
+  }
+  .ztpl-ui-widget{
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    
+  }
+  .ztpl-row-wrapper input{
+    padding:15px 10px;
+    background: lightgrey;
+    border:none;
+  }
+  .ztpl-row-wrapper input:focus-visible {
+    outline-offset: 0rem;
+}
+  .add_btn_row {
+    margin:10px 0;
+  }
+  .add_btn_div {
+    padding: 10px 20px;
+  }
+  .bottom_btns_row .cart-controls{
+  display:flex;
+  }
+  .control1, .control2{
+    width:50%;
+    display:flex;
+    justify-content:space-around;
+  }
+  .cart-controls button{
+    background: #169B62;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 7px;
+    color: #fff;
+    cursor: pointer;
+  }
+  .heading_row:last-child{
+ border-right:none;
+  }
+  .quantity_price_div {
+    padding:10px 25px;
+  }
+  .ztpl-ui-widget.search_label{
+    position:relative;
+  }
+  ul.search-results {
+    margin: 0;
+    position:absolute;
+    z-index:2;
+    padding-left:0;
+    list-style:none;
+    min-height: 40px;
+}
+  .height_result{
+    width: 415px;
+    max-height: 270px;
+    background: #fdfdfd;
+    border: 1px solid #c3c2c2;
+    border-style: dotted;
+    border-radius: 15px;
+    overflow-y:scroll;
+  }
+  ul.search-results .list-group-item{
+    display:flex;
+    align-items:center;
+  }
+  ul.search-results .list-group-item:hover{
+    background: #f7f1eb;
+  }
+  ul.search-results .list-group-item small {
+    font-size: 100%;
+    padding: 10px;
+  }
+  .image-parent img{
+   width:65px;
+    margin:10px;
+  }
+  .list-group-item .ms-auto{
+ margin:10px;
+  }
+  .search_link {
+ cursor:pointer;
+    color:#000;
+    text-decoration:none;
+  }
+  
+/*   mobile responsive */
+  @media screen and (max-width:800px){
+ .bulk_order_section {
+    width:100%;
+  }
+  }
+  @media screen and (max-width:599px){
+    .bulk_div{
+      width: 700px;
+    }
+    .bulk_order_section {
+      overflow-x:scroll;
+    }
+
+    .height_result{
+      width: 310px;
+    }
+  }
+  @media screen and (max-width:450px){
+    .height_result{
+      width: 270px;
+    }
+  }
+  
+</style>
+
+<!-- css style end -->
+
+<!-- Html code start-->
+      <div class="bulk_order_container">
+        <div class="bulk_order_section">
+           <h1 class="bulk_heading">Bulk Order Form</h1>
+           <div class="bulk_div">
+              <div class="bulk_row main_heading_row">
+                <div class="heading_row search_label">Search Product</div>
+                <div class="heading_row child_label qty">Quantity</div>
+                <div class="heading_row child_label cost">Cost</div>
+                <div class="heading_row child_label total">Total</div>
+              </div>
+              <div class="data_row">
+                
+               {% for i in (1..5) %}
+                  <div class="ztpl-row-wrapper">
+                    <input name="varient" type="hidden" class="ztpl-varient">
+                    <input name="variant_qty" type="hidden" class="ztpl-var-qty" value="1">
+<!--  Discount level hidden inputs  -->
+                    <input name="disc_level3" type="hidden" class="discount_Level3" value="">
+                    <input name="disc_level5" type="hidden" class="discount_Level5" value="">
+                    <input name="disc_level6" type="hidden" class="discount_Level6" value="">
+                    
+                    <div class="ztpl-ui-widget search_label">
+                      
+                       <input  type="text" placeholder="Search Product"  class="ztpl-bo-variant-input ztpl-search_text ui-autocomplete-input" autocomplete="off" name="qqqq" value=""> 
+                      <ul class="search-results "></ul>
+                    </div>
+                    <div class="ztpl-qt_box child_label three_inputs">
+                      <input style="text-align:center; " type="text" class="ztpl-product_quantity" placeholder="Quantity" >
+                    </div>
+                    <div class="ztpl-cost_box child_label three_inputs">
+                      <input style="text-align:center; " type="text" class="ztpl-product_cost" placeholder="Cost" disabled>
+                    </div>
+                    <div class="ztpl-total_box child_label three_inputs">
+                      <input style="text-align:center; " type="text" class="ztpl-total" placeholder="Total" disabled>
+                    </div>
+                    <div class="remove-section child_label"  title="Remove the row">
+                      <span aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="times" class="svg-inline--fa fa-times fa-w-11" role="img" viewBox="0 0 352 512"><path fill="currentColor" d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"/></svg>
+                      </span>
+                    </div>
+                  </div>
+                
+                {% endfor %}
+                
+
+              </div>
+             <div class="add_btn_row">
+              <div class="add_btn_div">
+                <b id="add_product_label">+ Add Product</b>
+               </div>
+             </div>
+             <div class="quantity_row">
+            
+               
+               <div  class="quantity_price_div">
+                    <div style="border: solid 1px #000; padding:5px; width:20%; margin-bottom:10px"  class="ztpl-qt_box qtbox_media" ><b>Quantity:</b> <span id="ztpl-total_itams"></span></div>
+
+                    <div  style="border: solid 1px #000; padding:5px; width:20%; margin-bottom:10px"   class="ztpl-total_box ztpl-totalbox_media" ><b>Total:</b> <span id="ztpl-grand_total" class="ztpl-money"></span></div>
+                </div>
+               <br/><br/>
+               
+             
+             </div>
+             <div class="bottom_btns_row">
+                <div>
+                    <div class="cart-controls">
+                        <div class="control1">
+                          <button class="" id="ztpl-addtocart">Add To Cart</button>
+                            <button class="" id="ztpl_go_to_cart" onclick="document.location.href = '/cart'">Go To Cart</button>       
+                        </div>
+                        <div class="control2">
+                            <button class="" id="ztpl-empty_cart">Clear Cart</button>
+                            <button type="reset" value="Reset" class="" id="ztpl-reset_all">Reset Form</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           </div>
+        </div>
+      </div>
+<!-- Html code end-->
+
+<!-- script start -->
+<!-- jquery cdn -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<!-- code -->
+<!-- predective search -->
+
+<script>
+  var products = [];
+  
+// jquery code start for adding row  
+  var this_row = null;
+  $(document).ready(function(){
+  $("#add_product_label").click(function(){ 
+    $(".data_row").append('<div class="ztpl-row-wrapper"><input name="varient" type="hidden" class="ztpl-varient"><div class="ztpl-ui-widget search_label"><input  type="text" placeholder="Search Product"  class="ztpl-bo-variant-input ztpl-search_text ui-autocomplete-input" autocomplete="off" name="qqq" value=""><ul class="search-results"></ul></div><div class="ztpl-qt_box child_label three_inputs"><input style="text-align:center; " type="text" class="ztpl-product_quantity" placeholder="Quantity" ></div><div class="ztpl-cost_box child_label three_inputs"><input type="text" style="text-align:center; " class="ztpl-product_cost" placeholder="Cost" disabled></div><div class="ztpl-total_box child_label three_inputs"><input style="text-align:center; " type="text" class="ztpl-total" placeholder="Total" disabled></div><div class="remove-section child_label"  title="Remove the row"><span aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="times" class="svg-inline--fa fa-times fa-w-11" role="img" viewBox="0 0 352 512"><path fill="currentColor" d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"/></svg></span></div></div>');  
+  });
+  
+  
+    $(document).on('click', '#ztpl-reset_all', function(){
+     $(".ztpl-row-wrapper").each(function(){
+         $(this).find(".ztpl-search_text").val("");
+         $(this).find(".ztpl-product_quantity").val("");
+        $(this).find(".ztpl-product_cost").val("");
+         $(this).find(".ztpl-total").val("");
+         $(this).find(".ztpl-varient").val("");
+         $(this).find(".search-results").empty();
+         $(this).find(".ztpl-var-qty").val("");
+         $(this).removeClass("active_search_row");
+     });
+     calculate_total();
+  });
+  $(document).on('change', '.ztpl-product_quantity', function(){
+    var qntyMul = parseInt($(this).val());
+    var max_qty = parseInt($(this).parents(".ztpl-row-wrapper").data('max-quantity'));
+    
+    if (qntyMul > max_qty){
+      qntyMul = max_qty;
+      $(this).val(max_qty);
+      $(this).parents(".ztpl-row-wrapper").find(".ztpl-var-qty").val(max_qty);
+      alert("max available quantity is:" +max_qty);
+    } else if(qntyMul < 1 || qntyMul == ""){
+      $(this).val(1); 
+      $(this).parents(".ztpl-row-wrapper").find(".ztpl-var-qty").val(1);
+    } else {
+      $(this).parents(".ztpl-row-wrapper").find(".ztpl-var-qty").val(qntyMul);
+    }
+    
+    var cost2 = $(this).parent().parent().find(".ztpl-product_cost").val();
+    var totalnewp = qntyMul*cost2;
+    $(this).parent().parent().find(".ztpl-total").val(totalnewp);
+    calculate_total();
+  });
+    
+    
+  $(document).on('click', '.remove-section', function(){
+    $(this).parent().remove();
+     calculate_total();
+  });
+  $(document).on('keydown', '.ztpl-search_text', function(){
+    $(this).next().addClass("height_result");
+  });
+  $(document).on('click', '.list-group-item', function(){
+     
+    var id = $(this).data("id");
+     console.log(products)
+    var item =  products.filter(function(creature) {
+      
+      return creature.var_id == id;
+    });
+    
+    item = item[0];
+    console.log(item)
+	var price = item.price / 100;
+    price = price.toFixed(2);
+    $(".active_search_row").find(".ztpl-search_text").val(item.title);
+    $(".active_search_row").find(".ztpl-product_quantity").val(1);
+    $(".active_search_row").find(".ztpl-product_cost").val(price);
+    $(".active_search_row").find(".ztpl-total").val(price);
+    $(".active_search_row").find(".ztpl-varient").val(item.var_id);
+	$(".active_search_row").find(".search-results").empty();
+    $(".active_search_row").attr("data-variant-id", item.var_id); 
+    $(".active_search_row").attr("data-max-quantity", item.var_qty);
+    $(".active_search_row").find(".ztpl-var-qty").val(1);
+//     for discount
+    $(".active_search_row").find(".discount_Level3").val(item.disc_level3);
+    $(".active_search_row").find(".discount_Level5").val(item.disc_level5);
+    $(".active_search_row").find(".discount_Level6").val(item.disc_level6);
+    
+    $(".ztpl-row-wrapper").removeClass("active_search_row");
+
+    calculate_total();
+  });
+
+$(document).on('keyup', '.ui-autocomplete-input', function(){
+// $('.ui-autocomplete-input').keyup(function(){
+    var q = $(this).val() + "*";
+    $(".ztpl-row-wrapper").removeClass("active_search_row");
+    var thiss = $(this).parent().parent().addClass("active_search_row");
+    var b = '&resources[type]=product&resources[options][fields]=title'
+	var this_row = $(this);
+   	
+  	setTimeout(function() { 
+      if(q !== ''){ 
+        $.ajax('/search?type=product&view=zestardbulkorder-json&q=' + q ,{
+          type: 'GET',
+          dataType: 'json', 
+          success: function(response) {
+
+            products = [];
+              var productSuggestions = response.results;
+              if (productSuggestions.length > 0) {
+                $(this_row).next("ul").empty();
+                $(productSuggestions).each(function() {
+                  var item = [];
+                  if(this.product.available){
+                  $(this_row).next("ul").append(
+                    '<a class="search_link"><li data-id="'+this.variant_id+'"  class="list-group-item list-group-item-action d-flex align-items-center"><div class="image-parent mr-3"><img class="img-fluid" src="' + this.product.featured_image + '"/></div><div><p class="mb-0">'+ this.product_title +" " +this.variant_title +' </p> </div>  </li></a>'
+                  );
+
+                  item["title"] = this.product.title;
+                    
+                  item["price"] = this.price;
+                  item["featured_image"] = this.product.featured_image;
+                  item["id"] = this.product.id;
+                  
+                  var vararr =  this.product.variants[0];
+                  item["var_qty"] = this.var_qty;
+                    
+                  item["var_id"] = this.variant_id;
+//                     for discount
+                  item["disc_level3"] = this.disc_level3;
+                  item["disc_level5"] = this.disc_level5;
+                  item["disc_level6"] = this.disc_level6;
+
+				
+                  products.push(item);
+                  }
+                });
+
+              } else {
+                $(this_row).next("ul").empty().append(
+                    '<li class="list-group-item list-group-item-action d-flex align-items-center"><small>No Results Found</small></li>'
+                );
+              }
+          }
+        });
+      }else{
+        $(this_row).next("ul").empty();
+        $(this_row).next("ul").removeClass("height_result");
+      }
+   }, 500);
+});
+
+    
+    
+});
+  
+  function calculate_total(){
+    var total_price = 0;
+    var tot_qty = 0;
+    $(".ztpl-row-wrapper").each(function(){
+      
+      var price = $(this).find(".ztpl-total").val();
+      var qty = $(this).find(".ztpl-product_quantity").val();
+ /*      var max_qty = $(this).find(".ztpl-var-qty").val();
+      
+      if (qty > max_qty){
+       
+        qty = max_qty;
+        $(this).find(".ztpl-product_quantity").val(qty);
+        //alert("max available quantity is:" +qty);
+      }
+*/      
+      if(price != "" && qty != "")
+      {
+      total_price = total_price + parseFloat(price);
+      	 tot_qty = tot_qty +  parseInt(qty);
+      }
+       	
+    });
+    
+    $("#ztpl-grand_total").empty().text(total_price);
+    $("#ztpl-total_itams").empty().text(tot_qty);
+  }
+//   jquery code ended for addedrow
+  
+  
+  $("#ztpl-addtocart").click(function(e) {
+    var cart_arr = [];
+    $(".ztpl-varient").each(function(){
+      var id = $(this).val();
+      var qty =$(this).parent().find(".ztpl-product_quantity").val();
+      var max_qty = $(this).parent().find(".ztpl-var-qty").val();
+      if (qty && qty > max_qty){
+       
+        qty = max_qty;
+        $(this).find(".ztpl-product_quantity").val(qty);
+       // alert("max available quantity is:" +qty);
+      }
+//       for discount
+      var discount1 =$(this).parent().find(".discount_Level3").val();
+      var discount2 =$(this).parent().find(".discount_Level5").val();
+      var discount3 =$(this).parent().find(".discount_Level6").val();
+      
+      
+      
+      if(id != "" && qty != "" && qty > 0){
+        cart_arr.push({
+            "id": id,
+            "quantity": qty,
+            "properties": {'__product-discount3': discount1,'__product-discount5': discount2,'__product-discount6': discount3} 
+        });
+      }
+      
+    });
+    
+    
+    $.post('/cart/add.json', {
+        items: cart_arr
+    }).done(function() {
+        window.location.href = "/cart";
+    }).fail(function() {
+        console.log("error");
+    }).always(function(data) {});
+});
+// filter array code
+  
+//   empty cart code
+  $("#ztpl-empty_cart").on('click', function (e) {
+            e.preventDefault();
+            
+            $.ajax({
+                type: "POST",
+                url: '/cart/clear.js',
+                data: '',
+                dataType: 'json',
+                success: function () {
+                   
+                    location.reload();
+                },
+                error: function (XMLHttpRequest, textStatus) {}
+            });
+        });
+
+
+  
+        $(document).on('click', '.bulk_order_container', function(){
+          $(".search-results").empty();
+          $(".search-results").removeClass("height_result");
+        });
+  
+  
+</script> 
+
+
+

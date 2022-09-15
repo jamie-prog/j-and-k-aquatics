@@ -1,0 +1,13 @@
+{%- include 'product-layout-template' -%}
+
+
+<script type="application/json" id="variant-metafields--data">
+    [
+        {% for variant in product.variants %}
+            { "id": {{variant.id}},
+              "rrpeur": {{variant.metafields.product.RRPEUR | json}},
+              "description": {{variant.metafields.product.description | json}}
+            }{%- unless forloop.last -%},{%- endunless -%}
+        {% endfor %}
+    ]
+</script>

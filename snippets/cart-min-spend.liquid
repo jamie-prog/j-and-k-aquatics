@@ -1,0 +1,11 @@
+{% assign minSpend = 40000 %}
+{% assign cartTotal = cart.total_price %}
+
+
+{% if cartTotal >= minSpend %}
+<p class="cart-spend-msg">You have qualified for delivery!</p>
+{% else %}
+{% assign spendAmount = minSpend | minus: cartTotal %}
+<p class="cart-spend-msg">Spend another {{ spendAmount | money }} to qualify for delivery.</p>
+{% endif %}
+

@@ -1,0 +1,36 @@
+{% layout none %}
+
+
+{% comment %}
+* Use the /search endpoint in Shopify as a JSON search
+Docs: https://help.shopify.com/en/manual/sell-online/online-store/storefront-search
+Search object: https://help.shopify.com/en/themes/liquid/objects/search
+Paginate object: https://help.shopify.com/en/themes/liquid/objects/paginate
+Usage: JSON.parse(await (await fetch('/search?q=something&type=article,page,product&view=api')).text())
+
+{%- for item in search.results -%}
+            {{- item | json -}}{%- unless forloop.last -%},{%- endunless -%}
+          {%- endfor -%}{
+{% endcomment %}
+{%- layout none -%}
+{%- paginate search.results by 250 -%}
+{
+  "searchResults": [
+  {%- for item in search.results -%}
+    {{- item | json -}}{%- unless forloop.last -%},{%- endunless -%}
+  {%- endfor -%}
+  ],
+  "searchPerformed": "{{- search.performed -}}",
+  "searchResultsCount": "{{- search.results_count -}}",
+  "searchTerms": "{{- search.terms -}}",
+  "searchTypes": "{{- search.types -}}",
+  "paginateCurrentOffset": {{- paginate.current_offset -}},
+  "paginateCurrentPage": {{- paginate.current_page -}},
+  "paginateItems": {{- paginate.items -}},
+  {% comment %}"paginateParts": "{{- paginate.parts | escape -}}",{% endcomment %}
+  {% comment %}"paginateNext": "{{- paginate.next | escape -}}",{% endcomment %}
+  {% comment %}"paginatePrevious": "{{- paginate.previous | escape -}}",{% endcomment %}
+  "paginatePageSize": {{- paginate.page_size -}},
+  "paginatePages": {{- paginate.pages -}}
+}
+{%- endpaginate -%}

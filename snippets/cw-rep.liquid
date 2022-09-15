@@ -1,0 +1,32 @@
+{% for tag in customer.tags %}	
+   	{% if tag contains 'JS' %}
+    	 <a href="https://j-and-k-aquatics.myshopify.com/pages/sales-reps#Justin%20Simmons">
+		<p style="font-weight:bold">Your Sales Rep is Justin Simmons - 07776172737</a><br/>
+		<a href="mailto:justin.simmons@jnk-aquatics.co.uk">Email: justin.simmons@jnk-aquatics.co.uk</a></p>
+	{% endif %}
+	{% if tag contains 'MR' %}
+			<a href="https://j-and-k-aquatics.myshopify.com/pages/sales-reps#Mark%20Reynolds">
+              <p style="font-weight:bold">Your Sales Rep is Mark Reynolds - 01278 664488</a><br/>
+<a href="mailto:mark.reynolds@jnk-aquatics.co.uk">Email: mark.reynolds@jnk-aquatics.co.uk</a></p>
+	{% endif %}           
+              
+    {% if tag contains 'KG' %}
+		<a href="https://j-and-k-aquatics.myshopify.com/pages/sales-reps#Hannah%20Morgan">
+          <p style="font-weight:bold">Your Sales Rep is Kris Gibbs - 07766008391</p></a><br/>
+<a href="mailto:hannah.morgan@jnk-aquatics.co.uk">Email: kris.gibbs@jnk-aquatics.co.uk</a></p>
+	{% endif %}
+    {% if tag contains 'SP' %}
+		<a href="https://j-and-k-aquatics.myshopify.com/pages/sales-reps#Scott%20Peck">
+          <p style="font-weight:bold">Your Sales Rep is Scott Peck - 07990533923</a><br/>
+<a href="mailto:scott.peck@jnk-aquatics.co.uk">Email: scott.peck@jnk-aquatics.co.uk</a></p>
+	{% endif %}
+    {% if tag contains 'House' %}
+		
+          <p style="font-weight:bold">Please call the Sales Office with your Order: 01278 664488</p>
+	{% endif %}
+
+{% endfor %}
+
+<br/>
+<p>Please do not change Billing or Shipment details here<br/>
+If you need to change your details, please contact Sales +44 1278 664488</p>

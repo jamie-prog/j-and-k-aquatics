@@ -1,0 +1,224 @@
+{%- comment -%}
+  - - - - - - -
+  -
+  - BACK TO TOP
+  -
+  - - - - - - -
+{%- endcomment-%}
+{%- capture backToTop_svg -%}
+  <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-double-up" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="svg-inline--fa fa-chevron-double-up fa-w-14 fa-2x"><path fill="currentColor" d="M241 34.5l194.3 194.3c9.4 9.4 9.4 24.6 0 33.9l-22.7 22.7c-9.4 9.4-24.5 9.4-33.9 0L224 131.5l-154.7 154c-9.4 9.3-24.5 9.3-33.9 0l-22.7-22.7c-9.4-9.4-9.4-24.6 0-33.9L207 34.5c9.4-9.3 24.6-9.3 34 0zm-34 192L12.7 420.9c-9.4 9.4-9.4 24.6 0 33.9l22.7 22.7c9.4 9.4 24.5 9.4 33.9 0l154.7-154 154.7 154c9.4 9.3 24.5 9.3 33.9 0l22.7-22.7c9.4-9.4 9.4-24.6 0-33.9L241 226.5c-9.4-9.3-24.6-9.3-34 0z" class=""></path></svg>
+{%- endcapture -%}
+<a href="javascript:void(0);" id="backToTop" class="btn">{%- render 'svg', type: 'custom', name: backToTop_svg -%}</a>
+
+
+{%- comment -%}
+  - - - - - - -
+  -
+  - LAYER MOBILE BAR
+  -
+  - - - - - - -
+{%- endcomment-%}
+
+
+
+{%- comment -%}
+  - - - - - - -
+  -
+  - MENU MOBILE
+  -
+  - - - - - - -
+{%- endcomment-%}
+
+{%- unless request.design_mode -%}
+  {%- render 'header-snippets', type: 'menu-mobile' -%}
+{%- endunless -%}
+
+{%- comment -%}
+  - - - - - - -
+  -
+  - CURRENCY MODAL
+  -
+  - - - - - - -
+{%- endcomment-%}
+{%- if settings.currency_type != '3' -%}
+  <dialog id="currencyModal" class="modal-ui" aria-hidden="true">
+    <div tabindex="-1" data-dialog-close></div>
+    <div role="dialog" aria-modal="true" class="lazyload" data-include="{{ routes.search_url }}?view=dialog.currency"></div>
+  </dialog>
+{%- endif -%}
+
+{%- form 'currency' ,class: 'shopify-currency-form d-none hide' -%}
+  <input type="hidden" name="currentCurrency" value="{{ cart.currency.iso_code }}">
+  <input type="hidden" name="return_to" value="{{request.path}}">
+  <select name="currency">
+    {%- for currency in shop.enabled_currencies -%}
+      <option data-value="{{currency.iso_code}}" data-symbol="{{ currency.symbol }}"{% if currency == cart.currency %} selected="true"{% endif %}>{{currency.iso_code}}</option>
+    {%- endfor -%}
+  </select>
+{%- endform -%}
+
+{%- comment -%}
+  - - - - - - -
+  -
+  - LANGUAGE MODAL
+  -
+  - - - - - - -
+{%- endcomment-%}
+{%- if settings.enable_multi_languages and shop.published_locales.size > 1 -%}
+
+  {%- capture returnPath -%}{%- unless routes.root_url == '/' -%}{{ request.path | downcase | remove: routes.root_url }}{%- else -%}{{request.path}}{%- endunless -%}{%- endcapture -%}
+  <dialog id="languageModal" class="modal-ui" aria-hidden="true" data-return="{{returnPath}}">
+    <div tabindex="-1" data-dialog-close></div>
+    <div role="dialog" aria-modal="true" class="lazyload" data-include="{{ routes.search_url }}?view=dialog.language"></div>
+  </dialog>
+{%- endif -%}
+
+{%- comment -%}
+  - - - - - - -
+  -
+  - SEARCH
+  -
+  - - - - - - -
+{%- endcomment-%}
+<dialog id="searchModal" class="modal-ui lazyqueue-wait" aria-hidden="true">
+  <div tabindex="-1" data-dialog-close></div>
+  <div role="dialog" aria-modal="true" aria-labelledby="modal-search-title" class="lazyload" data-include="{{routes.search_url}}?q=&view=modal"></div>
+</dialog>
+
+
+
+{%- comment -%}
+  - - - - - - - -
+  -
+  - EDITOR MODE
+  -
+  - - - - - - - -
+{%- endcomment-%}
+{%- if request.design_mode -%}
+  {%- capture content -%}
+  <link href="{{ 'verify_code.css' | asset_url }}" rel="stylesheet" type="text/css" media="all">
+  <dialog id="verifyCode" class="modal-ui" aria-hidden="true">
+    <div role="dialog" aria-modal="true" aria-labelledby="verifyCode-title">
+      <div id="verifyCode-content">
+        <div class="dialog-body" data-notify-content>
+          <strong>Active theme purchase code</strong>
+          <span class="line"></span>
+          <h1>Add License Key/Purchase Code</h1>
+
+          <form action="/" id="verifyCodeForm" method="POST">
+            <p>Enter your purchase code and hit return/enter. Find out how to get your purchase code.</p>
+            <div class="verify-form-group">
+              <input type="text" name="pcode" placeholder="Purchase code (e.g. xxxxxxxxxx)" pattern="[(a-z0-9)]{8}-[(a-z0-9)]{4}-[(a-z0-9)]{4}-[(a-z0-9)]{4}-[(a-z0-9)]{12}">
+              <p id="verify-error" style="display: none;">Please try again!</p>
+            </div>
+
+            <div class="verify-form-group">
+              <a id="arnHowGetPCode" href="https://support.arenacommerce.com/support/solutions/articles/6000116407-how-to-find-your-themeforest-item-purchase-code">How to get License key?</a>
+              <input type="submit" value="Active License Key">
+            </div>
+          </form>
+          <p>A purchase code (license) is only valid for One Domain. Are you using this theme on a new domain? Purchase a new license here to get a new purchase code.</p>
+          <style>
+            body.not-verify{max-height: 100vh!important; overflow: hidden!important;}
+          </style>
+        </div>
+      </div>
+    </div>
+    {% comment %} {{ 'arnverifycode.js' | asset_url | script_tag }} {% endcomment %}
+    <script src="{{ 'arnverifycode.js' | asset_url }}" async></script>
+
+  </dialog>
+
+  <dialog id="themeGuide" class="modal-ui" aria-hidden="true">
+
+    <div role="dialog" aria-modal="true" aria-labelledby="themeGuide-title">
+      <a href="javascript:void(0);" class="btn" data-dialog-close>
+        <svg width="22" height="19" viewBox="0 0 22 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M17.3805 16.895L2.9182 2.43267C2.6584 2.17286 2.55963 1.92523 2.67128 1.81358L3.71333 0.77153C3.82498 0.659881 4.07262 0.758651 4.33242 1.01845L18.8813 15.5674C19.1411 15.8272 19.2399 16.0748 19.1283 16.1865L18.0862 17.2285C17.9252 17.2163 17.6403 17.1548 17.3805 16.895Z" fill="#103178"/>
+          <path d="M4.41928 16.895L18.8816 2.43267C19.1414 2.17286 19.2402 1.92523 19.1285 1.81358L18.0865 0.77153C17.9748 0.659881 17.7272 0.758651 17.4674 1.01845L2.91847 15.5674C2.65866 15.8272 2.55989 16.0748 2.67154 16.1865L3.7136 17.2285C3.87463 17.2163 4.15948 17.1548 4.41928 16.895Z" fill="#103178"/>
+        </svg>
+      </a>
+
+      <div id="themeGuide-content">
+        <div class="dialog-body" data-notify-content>
+          <p class="guide-heading">1 - App Integration</p>
+          <ul class="list-guide">
+            <li><a href="https://support.arenacommerce.com/a/solutions/articles/6000243911" target="_blank" rel="noopener">How to insert values for your theme</a></li>
+          </ul>
+
+          <p class="guide-heading">2 - Theme General Settings</p>
+          <ul class="list-guide">
+            <li><a href="https://support.arenacommerce.com/a/solutions/articles/6000243918" target="_blank" rel="noopener">Theme Settings tab | General settings</a></li>
+            <li><a href="https://support.arenacommerce.com/a/solutions/articles/6000243920" target="_blank" rel="noopener">Theme Settings tab | Section settings</a></li>
+            <li><a href="https://support.arenacommerce.com/a/solutions/articles/6000244593" target="_blank" rel="noopener">Product recommendation popup</a></li>
+          </ul>
+
+          <p class="guide-heading">3 - Static Sections' Customization</p>
+          <ul class="list-guide">
+            <li><a href="https://support.arenacommerce.com/a/solutions/articles/6000243934" target="_blank" rel="noopener">Theme Config</a></li>
+            <li><a href="https://support.arenacommerce.com/a/solutions/articles/6000243937" target="_blank" rel="noopener">Announcement bar</a></li>
+            <li><a href="https://support.arenacommerce.com/a/solutions/articles/6000243938" target="_blank" rel="noopener">Desktop header & Mega menu</a></li>
+            <li><a href="https://support.arenacommerce.com/a/solutions/articles/6000243979" target="_blank" rel="noopener">Mobile header</a></li>
+            <li><a href="https://support.arenacommerce.com/a/solutions/articles/6000243981" target="_blank" rel="noopener">Icon Box</a></li>
+            <li><a href="https://support.arenacommerce.com/a/solutions/articles/6000243982" target="_blank" rel="noopener">Footer widget</a></li>
+            <li><a href="https://support.arenacommerce.com/a/solutions/articles/6000243984" target="_blank" rel="noopener">Footer</a></li>
+            <li><a href="https://support.arenacommerce.com/a/solutions/articles/6000243987" target="_blank" rel="noopener">Mobile bar</a></li>
+          </ul>
+
+          <p class="guide-heading">4 - Home page customization</p>
+          <ul class="list-guide">
+            <li><a href="https://support.arenacommerce.com/a/solutions/articles/6000243989" target="_blank" rel="noopener">Slideshow</a></li>
+            <li><a href="https://support.arenacommerce.com/a/solutions/articles/6000244008" target="_blank" rel="noopener">Image gallery</a></li>
+            <li><a href="https://support.arenacommerce.com/a/solutions/articles/6000244010" target="_blank" rel="noopener">Image gallery auto width</a></li>
+            <li><a href="https://support.arenacommerce.com/a/solutions/articles/6000244011" target="_blank" rel="noopener">Instafeed</a></li>
+            <li><a href="https://support.arenacommerce.com/a/solutions/articles/6000244048" target="_blank" rel="noopener">Single banner</a></li>
+            <li><a href="https://support.arenacommerce.com/a/solutions/articles/6000244101" target="_blank" rel="noopener">Blog Posts</a></li>
+            <li><a href="https://support.arenacommerce.com/a/solutions/articles/6000244103" target="_blank" rel="noopener">Categories</a></li>
+            <li><a href="https://support.arenacommerce.com/a/solutions/articles/6000244109" target="_blank" rel="noopener">Product grid</a></li>
+            <li><a href="https://support.arenacommerce.com/a/solutions/articles/6000244150" target="_blank" rel="noopener">Product grid V2 V3</a></li>
+            <li><a href="https://support.arenacommerce.com/a/solutions/articles/6000244229" target="_blank" rel="noopener">Product tabs</a></li>
+            <li><a href="https://support.arenacommerce.com/a/solutions/articles/6000244231" target="_blank" rel="noopener">Newsletter</a></li>
+            <li><a href="https://support.arenacommerce.com/a/solutions/articles/6000244232" target="_blank" rel="noopener">Separator</a></li>
+            <li><a href="https://support.arenacommerce.com/a/solutions/articles/6000244234" target="_blank" rel="noopener">Custom content</a></li>
+            <li><a href="https://support.arenacommerce.com/a/solutions/articles/6000244240" target="_blank" rel="noopener">Testimonials</a></li>
+          </ul>
+
+          <p class="guide-heading">5 - Product pages</p>
+          <ul class="list-guide">
+            <li><a href="https://support.arenacommerce.com/a/solutions/articles/6000244295" target="_blank" rel="noopener">Product page</a></li>
+            <li><a href="https://support.arenacommerce.com/a/solutions/articles/6000244297" target="_blank" rel="noopener">Sidebar</a></li>
+            <li><a href="https://support.arenacommerce.com/a/solutions/articles/6000244303" target="_blank" rel="noopener">Product recommendation</a></li>
+            <li><a href="https://support.arenacommerce.com/a/solutions/articles/6000244308" target="_blank" rel="noopener">Bottom banner</a></li>
+          </ul>
+
+          <p class="guide-heading">6 - Collection pages</p>
+          <ul class="list-guide">
+            <li><a href="https://support.arenacommerce.com/a/solutions/articles/6000244442" target="_blank" rel="noopener">Sidebar</a></li>
+            <li><a href="https://support.arenacommerce.com/a/solutions/articles/6000244448" target="_blank" rel="noopener">Collection page</a></li>
+            <li><a href="https://support.arenacommerce.com/a/solutions/articles/6000244449" target="_blank" rel="noopener">Bottom banner</a></li>
+          </ul>
+
+          <p class="guide-heading">7 - Blog</p>
+          <ul class="list-guide">
+            <li><a href="https://support.arenacommerce.com/a/solutions/articles/6000244451" target="_blank" rel="noopener">Blog page</a></li>
+            <li><a href="https://support.arenacommerce.com/a/solutions/articles/6000244482" target="_blank" rel="noopener">Blog posts</a></li>
+          </ul>
+
+          <p class="guide-heading">8 - Pages</p>
+          <ul class="list-guide">
+            <li><a href="https://support.arenacommerce.com/a/solutions/articles/6000244484" target="_blank" rel="noopener">About us</a></li>
+            <li><a href="https://support.arenacommerce.com/a/solutions/articles/6000244579" target="_blank" rel="noopener">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+
+  <style>
+    @keyframes hvr-icon-bob {0%, 100% {transform: translateY(-8px);}100% {transform: translateY(0);}}
+    a[data-dialog-trigger="#themeGuide"]{animation-name: hvr-icon-bob;animation-duration: .65s;animation-delay: .2s;animation-iteration-count: infinite;animation-direction: alternate;}
+  </style>
+  {%- endcapture -%}
+  {%- render 'compress', content: content -%}
+{%- endif -%}

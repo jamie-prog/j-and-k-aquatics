@@ -1,0 +1,60 @@
+<div class="container">
+    {%- for block in section.blocks -%}
+    <div class="sales-rep-block {% cycle 'odd', 'even' %}">
+        <div class="image" style="background-image: url( '{{ block.settings.image | img_url: 'master' }}' )"></div>
+        <div class="text">
+            <div class="inner">
+              <br/><br/>
+              
+              <a name="{{ block.settings.subtitle }}"></a>
+                {%- if block.settings.title != blank -%}<h3>{{ block.settings.title }}</h3>{%- endif -%}
+              
+                {%- if block.settings.subtitle != blank -%}<h4>{{ block.settings.subtitle }}</h4>{%- endif -%}
+                <p>{{ block.settings.text }}</p>
+            </div>
+        </div>
+    </div>
+    {%- endfor -%}
+</div>
+
+
+{% schema %}
+{
+"name": "Sales Reps page",
+"tag": "section",
+"settings": [
+{
+"type": "paragraph",
+"content": "Created by 'Page sales template' section"
+}
+],
+"blocks": [
+{
+"type": "paragraph",
+"name": "Block",
+"settings": [
+{
+"type": "image_picker",
+"id": "image",
+"label": "Image"
+},
+{
+"type": "text",
+"id": "title",
+"label": "Title"
+},
+{
+"type": "text",
+"id": "subtitle",
+"label": "Subitle"
+},
+{
+"type": "richtext",
+"id": "text",
+"label": "Text"
+}
+]
+}
+]
+}
+{% endschema %}

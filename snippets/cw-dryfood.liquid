@@ -1,0 +1,16 @@
+ <center> 
+   	   {% for tag in product.tags %}
+   	{% if tag contains 'FOOD' %} 
+   <div style="width:100%;  text-align:center; padding:0px; ">
+	<div style="width:100%; background-color:red; text-align:center; color:#fff; padding:10px;">
+      DRY FOOD<br/>Please note some food items may require additional certification due to containing products of animal origin. 
+
+For this reason, we ask these items are submitted on a separate order, which makes it easier for us to complete some of the additional tasks associated with obtaining correct certification.
+<br/>
+	If you have any queries, please contact the <br/>Sales Office (+44 1278 664488)
+  </div>
+</div>{% break %}
+           {% endif %} 
+   {% endfor %} 
+      
+</center>
