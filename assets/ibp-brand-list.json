@@ -27,7 +27,7 @@
       "md5name": "4b79b8571a318f2549f26f54a4451374",
       "image": "",
       "sale": false,
-      "instock": true,
+      "instock": false,
       "custom_image": false,
       "collection": false,
       "exclude": false,
@@ -55,17 +55,6 @@
       "exclude": false,
       "favourite": false
     },
-    "Eheim": {
-      "name": "Eheim",
-      "md5name": "fedde94f079dcde35e480f05de295258",
-      "image": "",
-      "sale": false,
-      "instock": true,
-      "custom_image": false,
-      "collection": false,
-      "exclude": false,
-      "favourite": false
-    },
     "Cloverleaf": {
       "name": "Cloverleaf",
       "md5name": "0c5b8c0766b73e91a41acb0af8f73ff4",
@@ -82,7 +71,7 @@
       "md5name": "b21cb983ed6ec3fae04b839321bf928a",
       "image": "",
       "sale": false,
-      "instock": false,
+      "instock": true,
       "custom_image": false,
       "collection": false,
       "exclude": false,
@@ -432,6 +421,17 @@
     "Eco Systems": {
       "name": "Eco Systems",
       "md5name": "7db801b3706a19b479ff917b41ea4f72",
+      "image": "",
+      "sale": false,
+      "instock": true,
+      "custom_image": false,
+      "collection": false,
+      "exclude": false,
+      "favourite": false
+    },
+    "Eheim": {
+      "name": "Eheim",
+      "md5name": "fedde94f079dcde35e480f05de295258",
       "image": "",
       "sale": false,
       "instock": true,
@@ -792,6 +792,17 @@
       "exclude": false,
       "favourite": false
     },
+    "Repti Planet": {
+      "name": "Repti Planet",
+      "md5name": "bf03f5548a29edf495d8579b7d5963de",
+      "image": "",
+      "sale": false,
+      "instock": true,
+      "custom_image": false,
+      "collection": false,
+      "exclude": false,
+      "favourite": false
+    },
     "Vivexotic": {
       "name": "Vivexotic",
       "md5name": "fd845cd3180ac1a19324c4cbcd7300af",
@@ -885,7 +896,7 @@
       "md5name": "bbf90f16d568fab9227975a8e04151c2",
       "image": "",
       "sale": false,
-      "instock": true,
+      "instock": false,
       "custom_image": false,
       "collection": false,
       "exclude": false,
@@ -938,7 +949,7 @@
   },
   "job_status": "completed",
   "job_queue_time": "2022-05-11 09:11:23 +0000",
-  "job_start_time": "2022-05-16 07:21:50 +0000",
+  "job_start_time": "2022-09-27 10:18:07 +0000",
   "collections": {
     "exempt": {
       "item": "Exempt"
@@ -958,14 +969,11 @@
     "alphagrog": {
       "item": "Alphagrog"
     },
+    "ambience": {
+      "item": "Ambience"
+    },
     "anabantids": {
       "item": "Anabantids"
-    },
-    "angel-fish": {
-      "item": "Angel-Fish"
-    },
-    "angelfish": {
-      "item": "Angelfish"
     },
     "api": {
       "item": "API"
@@ -975,9 +983,6 @@
     },
     "aquarian": {
       "item": "Aquarian"
-    },
-    "aquarium": {
-      "item": "Aquarium"
     },
     "aquarium & cabinet": {
       "item": "Aquarium & Cabinet"
@@ -1093,6 +1098,12 @@
     "betta choice": {
       "item": "Betta Choice"
     },
+    "betta choice artificial plants": {
+      "item": "Betta Choice Artificial Plants"
+    },
+    "betta ornaments": {
+      "item": "Betta Ornaments"
+    },
     "blagdon": {
       "item": "Blagdon"
     },
@@ -1111,17 +1122,11 @@
     "boyu": {
       "item": "Boyu"
     },
-    "brushes": {
-      "item": "Brushes"
-    },
     "bubble magus": {
       "item": "Bubble Magus"
     },
     "bunched plants": {
       "item": "Bunched Plants"
-    },
-    "butterflyfish": {
-      "item": "Butterflyfish"
     },
     "cabinet sets": {
       "item": "Cabinet Sets"
@@ -1147,11 +1152,17 @@
     "ciano": {
       "item": "Ciano"
     },
+    "ciano offers - save 10% on selected aquariums": {
+      "item": "Ciano Offers - Save 10% on selected aquariums"
+    },
     "cichlids": {
       "item": "Cichlids"
     },
     "classic": {
       "item": "Classic"
+    },
+    "cleaning brushes": {
+      "item": "Cleaning Brushes"
     },
     "cleaning kits": {
       "item": "Cleaning Kits"
@@ -1195,8 +1206,8 @@
     "damselfish": {
       "item": "Damselfish"
     },
-    "danios\/barilus": {
-      "item": "Danios\/Barilus"
+    "danios\/barilius": {
+      "item": "Danios\/Barilius"
     },
     "dennerle": {
       "item": "Dennerle"
@@ -1270,6 +1281,9 @@
     "fluval": {
       "item": "Fluval"
     },
+    "freshwater shrimps & crabs": {
+      "item": "Freshwater Shrimps & Crabs"
+    },
     "frogs & toads": {
       "item": "Frogs & Toads"
     },
@@ -1285,8 +1299,8 @@
     "giesemann": {
       "item": "Giesemann"
     },
-    "glass cleaners": {
-      "item": "Glass Cleaners"
+    "glass \/ acrylic aquarium pane cleaners": {
+      "item": "Glass \/ Acrylic Aquarium Pane Cleaners"
     },
     "goldfish & coldwater foods": {
       "item": "Goldfish & Coldwater Foods"
@@ -1351,6 +1365,9 @@
     "king british": {
       "item": "King British"
     },
+    "king british specialist foods": {
+      "item": "King British Specialist Foods"
+    },
     "koi": {
       "item": "Koi"
     },
@@ -1375,8 +1392,8 @@
     "lucky reptile": {
       "item": "Lucky Reptile"
     },
-    "malawi's": {
-      "item": "Malawi's"
+    "malawi cichlids": {
+      "item": "Malawi Cichlids"
     },
     "marco rocks": {
       "item": "Marco Rocks"
@@ -1386,6 +1403,9 @@
     },
     "marine additives & buffers": {
       "item": "Marine Additives & Buffers"
+    },
+    "marine angelfish": {
+      "item": "Marine Angelfish"
     },
     "marine aquarium cleaning equipment": {
       "item": "Marine Aquarium Cleaning Equipment"
@@ -1398,6 +1418,9 @@
     },
     "marine aquariums": {
       "item": "Marine Aquariums"
+    },
+    "marine butterflyfish": {
+      "item": "Marine Butterflyfish"
     },
     "marine fish": {
       "item": "Marine Fish"
@@ -1462,6 +1485,9 @@
     "multibuy": {
       "item": "Multibuy"
     },
+    "nano & style aquariums": {
+      "item": "Nano & Style Aquariums"
+    },
     "natures ocean": {
       "item": "Natures Ocean"
     },
@@ -1485,6 +1511,33 @@
     },
     "offers": {
       "item": "Offers"
+    },
+    "offers - betta pond food": {
+      "item": "Offers - Betta Pond Food"
+    },
+    "offers - bubble magus skimmers": {
+      "item": "Offers - Bubble Magus Skimmers"
+    },
+    "offers - save 10% on cle replacement led light units": {
+      "item": "Offers - Save 10% on CLE Replacement LED Light Units"
+    },
+    "offers - save 10% on selected en pro lines": {
+      "item": "Offers - Save 10% on selected EN PRO lines"
+    },
+    "offers - save 20% on betta ornaments": {
+      "item": "Offers - Save 20% on Betta Ornaments"
+    },
+    "offers - save 20% on ciano cf internal power filters": {
+      "item": "Offers - Save 20% on Ciano CF Internal Power Filters"
+    },
+    "offers - save 25% on selected betta choice artificial plants": {
+      "item": "Offers - Save 25% on selected Betta Choice Artificial Plants"
+    },
+    "offers - save 35% on ciano water care products": {
+      "item": "Offers - Save 35% on Ciano Water Care Products"
+    },
+    "offers king british foods": {
+      "item": "Offers King British Foods"
     },
     "oliver knott": {
       "item": "Oliver Knott"
@@ -1651,8 +1704,8 @@
     "qium": {
       "item": "Qium"
     },
-    "rainbows": {
-      "item": "Rainbows"
+    "rainbowfish": {
+      "item": "Rainbowfish"
     },
     "ranchu": {
       "item": "Ranchu"
@@ -1750,9 +1803,6 @@
     "shrimp, crab & snail food": {
       "item": "Shrimp, Crab & Snail Food"
     },
-    "shrimps & crabs": {
-      "item": "Shrimps & Crabs"
-    },
     "sinking pond fish foods": {
       "item": "Sinking Pond Fish Foods"
     },
@@ -1768,11 +1818,11 @@
     "spare parts": {
       "item": "Spare Parts"
     },
-    "speedy fish ordering": {
-      "item": "Speedy Fish Ordering"
-    },
     "spider & small pet tanks": {
       "item": "Spider & Small Pet Tanks"
+    },
+    "starter kits": {
+      "item": "Starter Kits"
     },
     "steel\/glass\/plastic pipe work": {
       "item": "Steel\/Glass\/Plastic Pipe work"
@@ -1792,14 +1842,20 @@
     "surgeonfish (tangs)": {
       "item": "Surgeonfish (Tangs)"
     },
-    "tanganika": {
-      "item": "Tanganika"
+    "tanganyika cichlids": {
+      "item": "Tanganyika Cichlids"
+    },
+    "tanks & aquariums": {
+      "item": "Tanks & Aquariums"
     },
     "technical equipment": {
       "item": "Technical Equipment"
     },
     "tetra": {
       "item": "Tetra"
+    },
+    "tetra spares": {
+      "item": "Tetra Spares"
     },
     "tetra's\/rasboras\/minnows": {
       "item": "Tetra's\/Rasboras\/Minnows"
@@ -1836,6 +1892,9 @@
     },
     "tropical fish food": {
       "item": "Tropical Fish Food"
+    },
+    "tropical freshwater angel-fish": {
+      "item": "Tropical Freshwater Angel-Fish"
     },
     "tubing": {
       "item": "Tubing"
@@ -1904,7 +1963,7 @@
       "item": "Zoo Med"
     }
   },
-  "product_count": 4828,
-  "job_completed_time": "2022-05-16 07:22:04 +0000",
+  "product_count": 5124,
+  "job_completed_time": "2022-09-27 10:18:25 +0000",
   "job_run_time_min": 0
 }

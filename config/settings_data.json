@@ -4324,6 +4324,28 @@
       "16206447478948b24c": {
         "type": "section-slideshow",
         "blocks": {
+          "3239d5ff-9f3e-4f94-94f1-9fcde1c797f4": {
+            "type": "slide",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/RP_banner_cf739dc9-cada-48a4-9deb-c60e934a3e31.png",
+              "image_color": "#ededed",
+              "title_color": "#ffffff",
+              "text_color": "#ffffff",
+              "image_position": "",
+              "text_1": "",
+              "text_2": "",
+              "btn_txt": "",
+              "btn_url": "shopify:\/\/collections\/repti-planet",
+              "product_to_sell": "",
+              "show_product_price": true,
+              "show_product_label": false,
+              "sale_text": "",
+              "svg_1": "",
+              "text_svg_1": "",
+              "svg_2": "",
+              "text_svg_2": ""
+            }
+          },
           "16206447478948b24c-0": {
             "type": "slide",
             "settings": {
@@ -4371,6 +4393,7 @@
           }
         },
         "block_order": [
+          "3239d5ff-9f3e-4f94-94f1-9fcde1c797f4",
           "16206447478948b24c-0",
           "f7c39180-dbd6-4722-a6d5-27b361ca2693"
         ],
@@ -4386,6 +4409,7 @@
       },
       "162066085339439e5e": {
         "type": "section-products-grid",
+        "disabled": true,
         "settings": {
           "title": "Bestsellers",
           "boxed_layout": true,
@@ -4770,6 +4794,28 @@
       "16371633987102bd56": {
         "type": "section-slideshow",
         "blocks": {
+          "96af9ced-3a95-42f9-b891-bd6b33c31080": {
+            "type": "slide",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/RP_banner_cf739dc9-cada-48a4-9deb-c60e934a3e31.png",
+              "image_color": "#ededed",
+              "title_color": "#ffffff",
+              "text_color": "#ffffff",
+              "image_position": "left center",
+              "text_1": "",
+              "text_2": "",
+              "btn_txt": "",
+              "btn_url": "https:\/\/jnk-aquatics.co.uk\/collections\/repti-planet",
+              "product_to_sell": "",
+              "show_product_price": false,
+              "show_product_label": false,
+              "sale_text": "",
+              "svg_1": "",
+              "text_svg_1": "",
+              "svg_2": "",
+              "text_svg_2": ""
+            }
+          },
           "7bdafdfe-cffb-49ac-9381-8c19ea89a3ee": {
             "type": "slide",
             "settings": {
@@ -4796,15 +4842,15 @@
             "type": "slide",
             "disabled": true,
             "settings": {
-              "image": "shopify:\/\/shop_images\/CANISTER_BANNER_OFFER_1e0861c0-fae6-4e66-835d-ccc4471468d9.jpg",
+              "image": "shopify:\/\/shop_images\/RP_banner.png",
               "image_color": "#ededed",
               "title_color": "#ffffff",
               "text_color": "#ffffff",
-              "image_position": "center center",
-              "text_1": "<br>\n<br>\n<br>\n<br>\n<br>",
-              "text_2": "<br>",
-              "btn_txt": "SHOP OFFERS NOW",
-              "btn_url": "",
+              "image_position": "centre centre",
+              "text_1": "<br>",
+              "text_2": "<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>",
+              "btn_txt": "SHOP THE RANGE NOW >",
+              "btn_url": "https:\/\/jnk-aquatics.co.uk\/search?q=REPTI%20PLANET",
               "product_to_sell": "",
               "show_product_price": true,
               "show_product_label": false,
@@ -4840,6 +4886,7 @@
           }
         },
         "block_order": [
+          "96af9ced-3a95-42f9-b891-bd6b33c31080",
           "7bdafdfe-cffb-49ac-9381-8c19ea89a3ee",
           "16371633987102bd56-0",
           "92c251c7-27a9-41dc-b61e-7388dc4cb951"
@@ -4952,7 +4999,7 @@
               "image": "shopify:\/\/shop_images\/JULY_OFFERS_ddeaff16-51df-42fe-8d08-d7fcf9dfe3a7.png",
               "title": "",
               "banner_label": "none",
-              "content_1": "September <br> Offers",
+              "content_1": "October <br> Offers",
               "content_svg_2": "",
               "content_2": "",
               "button_label": "View",
